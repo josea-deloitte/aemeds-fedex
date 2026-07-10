@@ -1,0 +1,64 @@
+.quick-links ul {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 24px 8px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.quick-links li {
+  flex: 0 1 136px;
+  display: flex;
+  justify-content: center;
+}
+
+.quick-links a:any-link {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+  color: var(--text-color);
+  font-size: var(--body-font-size-xs);
+  font-weight: 500;
+  text-align: center;
+  text-decoration: none;
+}
+
+.quick-links a:focus-visible {
+  outline: 2px solid var(--fedex-purple);
+  outline-offset: 2px;
+}
+
+.quick-links .quick-links-chip {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 64px;
+  height: 64px;
+  border: 2px solid var(--fedex-purple);
+  border-radius: 50%;
+  background-color: var(--background-color);
+  transition: background-color 0.15s ease-in-out;
+}
+
+.quick-links .icon {
+  width: 28px;
+  height: 28px;
+}
+
+.quick-links a:hover .quick-links-chip,
+.quick-links a:focus-visible .quick-links-chip {
+  background-color: var(--fedex-purple);
+}
+
+.quick-links a:hover .icon img,
+.quick-links a:focus-visible .icon img {
+  filter: brightness(0) invert(1);
+}
+
+.quick-links a:hover .quick-links-label {
+  color: var(--fedex-purple);
+  text-decoration: underline;
+}

@@ -6,15 +6,80 @@ footer {
 footer .footer > div {
   margin: auto;
   max-width: 1200px;
-  padding: 40px 24px 24px;
+  padding: 48px 24px 24px;
+}
+
+footer .footer .section {
+  margin: 0;
+}
+
+footer .footer .section > div {
+  max-width: unset;
+  padding: 0;
 }
 
 footer .footer p {
   margin: 0;
 }
 
+footer .footer h2,
+footer .footer h3 {
+  margin: 0 0 12px;
+  color: var(--dark-color);
+  font-size: var(--body-font-size-xs);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+footer .footer ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+footer .footer ul li {
+  margin-bottom: 10px;
+}
+
+footer .footer a:any-link {
+  color: var(--dark-color);
+  text-decoration: none;
+}
+
+footer .footer a:hover,
+footer .footer a:focus-visible {
+  color: var(--fedex-purple);
+  text-decoration: underline;
+}
+
+/* legal bar: last section of the footer fragment */
+footer .footer .section:last-of-type {
+  margin-top: 32px;
+  border-top: 1px solid rgb(19 19 19 / 15%);
+  padding-top: 24px;
+}
+
+footer .footer .section:last-of-type .default-content-wrapper {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px 24px;
+  color: var(--dark-color);
+}
+
+footer .footer .section:last-of-type ul {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px 20px;
+}
+
+footer .footer .section:last-of-type ul li {
+  margin: 0;
+}
+
 @media (width >= 900px) {
   footer .footer > div {
-    padding: 40px 32px 24px;
+    padding: 48px 32px 24px;
   }
 }

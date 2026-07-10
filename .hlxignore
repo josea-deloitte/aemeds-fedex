@@ -5,3 +5,8 @@ LICENSE
 package.json
 package-lock.json
 test/*
+drafts/fedex-home-source.html
+
+# local dev fixtures for the /nav and /footer fragments (real content is authored in the CMS)
+nav.plain.html
+footer.plain.html

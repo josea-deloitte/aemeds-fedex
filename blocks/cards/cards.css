@@ -25,3 +25,48 @@
   aspect-ratio: 4 / 3;
   object-fit: cover;
 }
+
+/* promo variant: elevated cards with pinned footer link */
+.cards.promo > ul {
+  gap: 24px;
+}
+
+.cards.promo > ul > li {
+  display: flex;
+  flex-direction: column;
+  border: 0;
+  border-radius: 8px;
+  box-shadow: 0 2px 12px rgb(19 19 19 / 15%);
+  overflow: hidden;
+}
+
+.cards.promo > ul > li img {
+  aspect-ratio: 3 / 2;
+}
+
+.cards.promo .cards-card-body {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  margin: 20px 20px 24px;
+}
+
+.cards.promo .cards-card-body h3 {
+  margin-top: 0;
+  font-size: var(--heading-font-size-s);
+}
+
+.cards.promo .cards-card-body > p:last-of-type {
+  margin-top: auto;
+  padding-top: 12px;
+}
+
+.cards.promo .cards-card-body a:any-link {
+  color: var(--fedex-purple);
+  font-weight: 700;
+}
+
+.cards.promo .cards-card-body a:hover,
+.cards.promo .cards-card-body a:focus-visible {
+  text-decoration: underline;
+}

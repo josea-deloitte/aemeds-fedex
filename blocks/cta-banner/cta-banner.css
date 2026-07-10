@@ -1,0 +1,59 @@
+/* full-bleed purple strip; the generated section wrapper is unconstrained
+   and the inner content re-centers itself */
+.cta-banner-container .cta-banner-wrapper {
+  max-width: unset;
+  padding: 0;
+}
+
+.cta-banner {
+  padding: 48px 24px;
+  background-color: var(--fedex-purple);
+  color: var(--background-color);
+  text-align: center;
+}
+
+.cta-banner .cta-banner-content {
+  display: grid;
+  justify-items: center;
+  gap: 8px;
+  max-width: 720px;
+  margin: auto;
+}
+
+.cta-banner h2,
+.cta-banner h3 {
+  margin: 0;
+  color: var(--background-color);
+}
+
+.cta-banner p {
+  margin: 0;
+}
+
+.cta-banner a:any-link {
+  color: var(--background-color);
+  text-decoration: underline;
+}
+
+.cta-banner a.button:any-link {
+  margin-top: 12px;
+  border-color: var(--fedex-orange);
+  border-radius: 4px;
+  background-color: var(--fedex-orange);
+  color: var(--background-color);
+  font-weight: 700;
+  text-decoration: none;
+  text-transform: uppercase;
+}
+
+.cta-banner a.button:hover,
+.cta-banner a.button:focus-visible {
+  border-color: var(--fedex-orange-dark);
+  background-color: var(--fedex-orange-dark);
+}
+
+@media (width >= 900px) {
+  .cta-banner {
+    padding: 64px 32px;
+  }
+}

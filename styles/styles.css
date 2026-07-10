@@ -19,6 +19,12 @@
   --link-color: #3b63fb;
   --link-hover-color: #1d3ecf;
 
+  /* fedex brand colors */
+  --fedex-purple: #4d148c;
+  --fedex-purple-dark: #306;
+  --fedex-orange: #f60;
+  --fedex-orange-dark: #e05504;
+
   /* fonts */
   --body-font-family: roboto, roboto-fallback, sans-serif;
   --heading-font-family: roboto-condensed, roboto-condensed-fallback, sans-serif;
