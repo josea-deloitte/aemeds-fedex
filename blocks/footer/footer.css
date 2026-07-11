@@ -1,15 +1,17 @@
-/* ─── FedEx Footer ───────────────────────────────────────────────────────── */
+/* â”€â”€â”€ FedEx Footer â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
 
 footer {
   background-color: var(--light-color);
   font-size: var(--body-font-size-xs);
+
+  /* FedEx orange top accent border */
   border-top: 4px solid var(--fedex-orange);
 }
 
 footer .footer > div {
   margin: auto;
   max-width: 1200px;
-  padding: 48px 24px 24px;
+  padding: 40px 24px 0;
 }
 
 footer .footer .section {
@@ -25,19 +27,19 @@ footer .footer p {
   margin: 0;
 }
 
-/* ── column headings ─────────────────────────────────────────────────────── */
+/* â”€â”€ column headings â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
 footer .footer h2,
 footer .footer h3 {
-  margin: 0 0 12px;
+  margin: 0 0 14px;
   color: var(--text-color);
   font-family: var(--heading-font-family);
-  font-size: var(--body-font-size-xs);
+  font-size: 11px;
   font-weight: 700;
-  letter-spacing: 0.08em;
+  letter-spacing: 0.1em;
   text-transform: uppercase;
 }
 
-/* ── link lists ──────────────────────────────────────────────────────────── */
+/* â”€â”€ link lists (decorated from <p>-link<br> format by footer.js) â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
 footer .footer ul {
   list-style: none;
   margin: 0;
@@ -46,10 +48,12 @@ footer .footer ul {
 
 footer .footer ul li {
   margin-bottom: 10px;
+  line-height: 1.4;
 }
 
 footer .footer a:any-link {
   color: var(--dark-color);
+  font-size: 14px;
   text-decoration: none;
 }
 
@@ -59,13 +63,11 @@ footer .footer a:focus-visible {
   text-decoration: underline;
 }
 
-/* ── columns block inside footer ─────────────────────────────────────────── */
-
-/* The Columns block renders a div > div > div per cell on desktop */
+/* â”€â”€ columns block: responsive 1â†’2â†’3 column grid â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
 footer .footer .columns > div {
   display: grid;
   grid-template-columns: 1fr;
-  gap: 32px;
+  gap: 28px 40px;
 }
 
 @media (width >= 600px) {
@@ -77,11 +79,11 @@ footer .footer .columns > div {
 @media (width >= 900px) {
   footer .footer .columns > div {
     grid-template-columns: repeat(3, 1fr);
-    gap: 40px;
+    gap: 0 48px;
   }
 }
 
-/* ── mobile accordion toggle for link columns ────────────────────────────── */
+/* â”€â”€ mobile accordion â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
 footer .footer .footer-col-toggle {
   display: flex;
   justify-content: space-between;
@@ -90,11 +92,11 @@ footer .footer .footer-col-toggle {
   background: none;
   border: none;
   border-bottom: 1px solid rgb(19 19 19 / 15%);
-  padding: 12px 0;
+  padding: 14px 0;
   font-family: var(--heading-font-family);
-  font-size: var(--body-font-size-xs);
+  font-size: 11px;
   font-weight: 700;
-  letter-spacing: 0.08em;
+  letter-spacing: 0.1em;
   text-transform: uppercase;
   color: var(--text-color);
   cursor: pointer;
@@ -103,8 +105,8 @@ footer .footer .footer-col-toggle {
 
 footer .footer .footer-col-toggle::after {
   content: '+';
-  font-size: 20px;
-  font-weight: 400;
+  font-size: 22px;
+  font-weight: 300;
   line-height: 1;
   flex-shrink: 0;
   transition: transform 0.2s ease;
@@ -118,12 +120,11 @@ footer .footer .footer-col-body {
   overflow: hidden;
   max-height: 0;
   transition: max-height 0.25s ease;
-  padding-top: 0;
 }
 
 footer .footer .footer-col-body.is-open {
   max-height: 400px;
-  padding-top: 12px;
+  padding-top: 14px;
 }
 
 @media (width >= 900px) {
@@ -134,9 +135,6 @@ footer .footer .footer-col-body.is-open {
   footer .footer h2,
   footer .footer h3 {
     display: block;
-    border-bottom: none;
-    padding: 0;
-    margin: 0 0 12px;
   }
 
   footer .footer .footer-col-body {
@@ -146,11 +144,18 @@ footer .footer .footer-col-body.is-open {
   }
 }
 
-/* ── legal bar: last section of the footer fragment ──────────────────────── */
+/* â”€â”€ legal bar: LAST section â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
+
+/* Gap fix: original FedEx legal bar has purple background with white text */
 footer .footer .section:last-of-type {
   margin-top: 32px;
-  border-top: 1px solid rgb(19 19 19 / 15%);
-  padding-top: 24px;
+
+  /* stretch to full viewport width using negative margin trick */
+  margin-left: calc(-50vw + 50%);
+  margin-right: calc(-50vw + 50%);
+  padding: 20px calc(50vw - 50%);
+  background-color: var(--fedex-purple);
+  color: var(--background-color);
 }
 
 footer .footer .section:last-of-type .default-content-wrapper {
@@ -159,22 +164,55 @@ footer .footer .section:last-of-type .default-content-wrapper {
   align-items: center;
   justify-content: space-between;
   gap: 8px 24px;
-  color: var(--dark-color);
+  max-width: 1200px;
+  margin: auto;
+  padding: 0 24px;
+  color: var(--background-color);
+  font-size: 13px;
+}
+
+footer .footer .section:last-of-type p {
+  margin: 0;
+  color: var(--background-color);
 }
 
 footer .footer .section:last-of-type ul {
   display: flex;
   flex-wrap: wrap;
-  gap: 8px 20px;
+  gap: 6px 0;
 }
 
 footer .footer .section:last-of-type ul li {
   margin: 0;
+  line-height: 1.5;
+}
+
+/* pipe separators between legal links */
+footer .footer .section:last-of-type ul li:not(:last-child)::after {
+  content: '|';
+  margin: 0 12px;
+  color: rgb(255 255 255 / 50%);
+}
+
+footer .footer .section:last-of-type a:any-link {
+  color: var(--background-color);
+  font-size: 13px;
+  text-decoration: none;
+}
+
+footer .footer .section:last-of-type a:hover,
+footer .footer .section:last-of-type a:focus-visible {
+  color: var(--fedex-orange);
+  text-decoration: underline;
 }
 
 @media (width >= 900px) {
   footer .footer > div {
-    padding: 48px 32px 24px;
+    padding: 48px 32px 0;
+  }
+
+  footer .footer .section:last-of-type .default-content-wrapper {
+    padding: 0 32px;
   }
 }
 

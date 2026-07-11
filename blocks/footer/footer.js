@@ -4,13 +4,54 @@ import { loadFragment } from '../fragment/fragment.js';
 const isDesktop = window.matchMedia('(min-width: 900px)');
 
 /**
- * Wraps each footer link column in a mobile-friendly accordion.
- * On desktop the toggle is hidden via CSS and all content stays visible.
+ * Gap fix: the CMS/da.live Columns block renders footer links as
+ * "<p>- <a>Link</a><br>- <a>Link</a></p>" instead of a proper list.
+ * This function converts those paragraphs into semantic <ul><li> lists.
+ * @param {Element} footer
+ */
+function cleanFooterLinks(footer) {
+  footer.querySelectorAll('.columns > div > div').forEach((col) => {
+    col.querySelectorAll('p').forEach((p) => {
+      const links = [...p.querySelectorAll('a')];
+      if (!links.length) return;
+      // Convert if it looks like a dash-separated link paragraph
+      if (p.innerHTML.includes('<br>') || p.textContent.trimStart().startsWith('-')) {
+        const ul = document.createElement('ul');
+        links.forEach((link) => {
+          const li = document.createElement('li');
+          li.append(link.cloneNode(true));
+          ul.append(li);
+        });
+        p.replaceWith(ul);
+      }
+    });
+  });
+}
+
+/**
+ * Gap fix: ensure the copyright paragraph has the © symbol.
+ * @param {Element} footer
+ */
+function fixCopyright(footer) {
+  const legalSection = footer.querySelector('.section:last-of-type');
+  if (!legalSection) return;
+  legalSection.querySelectorAll('p').forEach((p) => {
+    if (p.textContent.includes('FedEx') && !p.textContent.includes('©')) {
+      p.textContent = `© ${p.textContent.trim()}`;
+    }
+  });
+}
+
+/**
+ * Gap fix: wrap each footer link column in a mobile accordion.
+ * On desktop the toggle is hidden and content stays visible.
+ * Selector fixed: the inner div doesn't carry .footer — query from the passed element.
  * @param {Element} footer
  */
 function decorateFooterAccordion(footer) {
-  // Target each cell inside the Columns block (first content section)
-  footer.querySelectorAll('.footer .section:first-of-type .columns > div > div').forEach((col) => {
+  // Gap fix: was '.footer .section:first-of-type' — that selector never matched
+  // because `footer` here is the plain inner div, not the .footer block element.
+  footer.querySelectorAll('.section:first-of-type .columns > div > div').forEach((col) => {
     const heading = col.querySelector('h2, h3');
     if (!heading || isDesktop.matches) return;
 
@@ -21,7 +62,6 @@ function decorateFooterAccordion(footer) {
 
     const body = document.createElement('div');
     body.className = 'footer-col-body';
-    // move everything except the heading into the body
     [...col.children].forEach((child) => {
       if (child !== heading) body.append(child);
     });
@@ -36,7 +76,7 @@ function decorateFooterAccordion(footer) {
     });
   });
 
-  // Restore static layout if viewport grows to desktop
+  // When viewport grows to desktop, open all accordion bodies
   isDesktop.addEventListener('change', () => {
     if (isDesktop.matches) {
       footer.querySelectorAll('.footer-col-body').forEach((body) => {
@@ -51,16 +91,17 @@ function decorateFooterAccordion(footer) {
  * @param {Element} block The footer block element
  */
 export default async function decorate(block) {
-  // load footer as fragment
   const footerMeta = getMetadata('footer');
   const footerPath = footerMeta ? new URL(footerMeta, window.location).pathname : '/fragments/footer';
   const fragment = await loadFragment(footerPath);
 
-  // decorate footer DOM
   block.textContent = '';
   const footer = document.createElement('div');
   while (fragment.firstElementChild) footer.append(fragment.firstElementChild);
 
+  // Run all decoration passes before appending to the DOM
+  cleanFooterLinks(footer);
+  fixCopyright(footer);
   decorateFooterAccordion(footer);
 
   block.append(footer);

@@ -123,6 +123,35 @@ function decorateNavTools(navTools) {
 }
 
 /**
+ * Gap fix: if the brand image is broken (about:error or missing src),
+ * hide it and show the text of the parent link as a styled fallback.
+ * @param {Element} navBrand
+ */
+function decorateBrand(navBrand) {
+  if (!navBrand) return;
+  const img = navBrand.querySelector('img');
+  if (!img) return;
+
+  const handleError = () => {
+    img.style.display = 'none';
+    const parentLink = img.closest('a');
+    if (parentLink) {
+      // Show link text as fallback brand label
+      if (!parentLink.textContent.trim()) {
+        parentLink.textContent = 'FedEx';
+      }
+      parentLink.classList.add('nav-brand-text');
+    }
+  };
+
+  if (!img.complete || img.naturalWidth === 0) {
+    img.addEventListener('error', handleError);
+  } else if (img.getAttribute('src') === 'about:error' || img.getAttribute('src') === '') {
+    handleError();
+  }
+}
+
+/**
  * loads and decorates the header, mainly the nav
  * @param {Element} block The header block element
  */
@@ -165,16 +194,21 @@ export default async function decorate(block) {
     const brandWrapper = brandLink.closest('.button-wrapper, .button-container');
     if (brandWrapper) brandWrapper.className = '';
   }
+  decorateBrand(navBrand);
 
   const navSections = nav.querySelector('.nav-sections');
   if (navSections) {
     navSections.querySelectorAll(':scope .default-content-wrapper > ul > li').forEach((navSection) => {
       if (navSection.querySelector('ul')) {
         navSection.classList.add('nav-drop');
-        // mark each dropdown list for ARIA
-        const subList = navSection.querySelector('ul');
-        const labelId = `nav-label-${navSection.textContent.trim().toLowerCase().replace(/\s+/g, '-')}`;
+
+        // Gap fix: use only the immediate label text for the id, not all descendant text
+        const labelEl = navSection.querySelector(':scope > p, :scope > span, :scope > a');
+        const labelText = (labelEl ? labelEl.textContent : navSection.childNodes[0]?.textContent || '').trim();
+        const labelId = `nav-${labelText.toLowerCase().replace(/[^a-z0-9]+/g, '-')}`;
         navSection.id = labelId;
+
+        const subList = navSection.querySelector('ul');
         subList.setAttribute('aria-labelledby', labelId);
       }
       navSection.addEventListener('click', () => {
