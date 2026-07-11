@@ -109,19 +109,47 @@ function toggleMenu(nav, navSections, forceExpanded = null) {
 }
 
 /**
+ * Decorates the tools section: wraps the Sign In link as a button.
+ * @param {Element} navTools
+ */
+function decorateNavTools(navTools) {
+  if (!navTools) return;
+  navTools.querySelectorAll('a').forEach((link) => {
+    const text = link.textContent.trim().toLowerCase();
+    if (text === 'sign in' || text === 'log in') {
+      link.classList.add('button');
+    }
+  });
+}
+
+/**
  * loads and decorates the header, mainly the nav
  * @param {Element} block The header block element
  */
 export default async function decorate(block) {
+  // accessibility: skip-to-content link
+  const skip = document.createElement('a');
+  skip.className = 'skip-to-content';
+  skip.href = '#main-content';
+  skip.textContent = 'Skip to main content';
+  block.prepend(skip);
+
+  // ensure the main landmark has the target id
+  const main = document.querySelector('main');
+  if (main && !main.id) main.id = 'main-content';
+
   // load nav as fragment
   const navMeta = getMetadata('nav');
-  const navPath = navMeta ? new URL(navMeta, window.location).pathname : '/fragments/nav';
+  const navPath = navMeta ? new URL(navMeta, window.location).pathname : '/nav';
   const fragment = await loadFragment(navPath);
 
   // decorate nav DOM
   block.textContent = '';
+  block.prepend(skip); // re-attach after textContent clear
   const nav = document.createElement('nav');
   nav.id = 'nav';
+  nav.setAttribute('role', 'navigation');
+  nav.setAttribute('aria-label', 'Main navigation');
   while (fragment.firstElementChild) nav.append(fragment.firstElementChild);
 
   const classes = ['brand', 'sections', 'tools'];
@@ -141,7 +169,14 @@ export default async function decorate(block) {
   const navSections = nav.querySelector('.nav-sections');
   if (navSections) {
     navSections.querySelectorAll(':scope .default-content-wrapper > ul > li').forEach((navSection) => {
-      if (navSection.querySelector('ul')) navSection.classList.add('nav-drop');
+      if (navSection.querySelector('ul')) {
+        navSection.classList.add('nav-drop');
+        // mark each dropdown list for ARIA
+        const subList = navSection.querySelector('ul');
+        const labelId = `nav-label-${navSection.textContent.trim().toLowerCase().replace(/\s+/g, '-')}`;
+        navSection.id = labelId;
+        subList.setAttribute('aria-labelledby', labelId);
+      }
       navSection.addEventListener('click', () => {
         if (isDesktop.matches) {
           const expanded = navSection.getAttribute('aria-expanded') === 'true';
@@ -151,6 +186,8 @@ export default async function decorate(block) {
       });
     });
   }
+
+  decorateNavTools(nav.querySelector('.nav-tools'));
 
   // hamburger for mobile
   const hamburger = document.createElement('div');

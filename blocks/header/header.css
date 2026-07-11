@@ -1,10 +1,13 @@
+/* ─── FedEx Header / Nav ─────────────────────────────────────────────────── */
+
 /* header and nav layout */
 header .nav-wrapper {
   background-color: var(--fedex-purple);
   color: var(--background-color);
   width: 100%;
-  z-index: 2;
+  z-index: 100;
   position: fixed;
+  box-shadow: 0 2px 8px rgb(0 0 0 / 30%);
 }
 
 header nav {
@@ -248,7 +251,7 @@ header nav .nav-sections ul > li > ul > li {
     font-weight: 500;
   }
 
-  header nav .nav-sections .default-content-wrapper > ul > li > ul {
+header nav .nav-sections .default-content-wrapper > ul > li > ul {
     display: none;
     position: relative;
   }
@@ -260,11 +263,26 @@ header nav .nav-sections ul > li > ul > li {
     width: 240px;
     top: 150%;
     padding: 16px;
-    border-radius: 4px;
+    border-radius: 0 0 4px 4px;
     background-color: var(--background-color);
     box-shadow: 0 8px 24px rgb(19 19 19 / 25%);
     color: var(--text-color);
     white-space: initial;
+
+    /* slide-down entrance */
+    animation: nav-dropdown-in 0.18s ease forwards;
+  }
+
+  @keyframes nav-dropdown-in {
+    from {
+      opacity: 0;
+      transform: translateY(-6px);
+    }
+
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
   }
 
   header nav .nav-sections .default-content-wrapper > ul > li > ul::before {
@@ -283,8 +301,15 @@ header nav .nav-sections ul > li > ul > li {
     padding: 8px 0;
   }
 
+  header nav .nav-sections .default-content-wrapper > ul > li > ul > li a:any-link {
+    color: var(--text-color);
+    text-decoration: none;
+    font-size: var(--body-font-size-xs);
+  }
+
   header nav .nav-sections .default-content-wrapper > ul > li > ul > li a:hover {
     color: var(--fedex-purple);
+    text-decoration: underline;
   }
 }
 
@@ -313,4 +338,64 @@ header nav .nav-tools .icon img {
 
 header nav[aria-expanded='true'] .nav-tools {
   border-top: 1px solid rgb(255 255 255 / 25%);
+}
+
+/* ── orange accent on active nav item ────────────────────────────────────── */
+header nav .nav-sections .default-content-wrapper > ul > li[aria-expanded='true'] {
+  color: var(--fedex-orange);
+}
+
+/* orange underline bar on the open/hovered nav item (desktop) */
+@media (width >= 900px) {
+  header nav .nav-sections .default-content-wrapper > ul > li {
+    padding-bottom: 4px;
+    border-bottom: 3px solid transparent;
+    transition: border-color 0.15s ease;
+  }
+
+  header nav .nav-sections .default-content-wrapper > ul > li:hover,
+  header nav .nav-sections .default-content-wrapper > ul > li:focus-within {
+    border-bottom-color: var(--fedex-orange);
+  }
+
+  header nav .nav-sections .default-content-wrapper > ul > li[aria-expanded='true'] {
+    border-bottom-color: var(--fedex-orange);
+    color: var(--background-color);
+  }
+}
+
+/* ── tools sign-in button ─────────────────────────────────────────────────── */
+header nav .nav-tools a.button {
+  border: 2px solid var(--background-color);
+  border-radius: 2px;
+  padding: 6px 14px;
+  font-size: var(--body-font-size-xs);
+  font-weight: 700;
+  color: var(--background-color);
+  background-color: transparent;
+  text-decoration: none;
+  transition: background-color 0.15s ease, color 0.15s ease;
+}
+
+header nav .nav-tools a.button:hover,
+header nav .nav-tools a.button:focus-visible {
+  background-color: var(--background-color);
+  color: var(--fedex-purple);
+}
+
+/* ── skip to content link (accessibility) ────────────────────────────────── */
+header .skip-to-content {
+  position: absolute;
+  top: -100%;
+  left: 0;
+  padding: 8px 16px;
+  background-color: var(--fedex-orange);
+  color: var(--background-color);
+  font-weight: 700;
+  z-index: 200;
+  text-decoration: none;
+}
+
+header .skip-to-content:focus {
+  top: 0;
 }
