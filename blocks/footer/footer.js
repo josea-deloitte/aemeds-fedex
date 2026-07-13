@@ -129,7 +129,9 @@ function extractSocialSection(root, mainSection, legalSection) {
   socialSection.className = 'section footer-social';
   const socialWrapper = document.createElement('div');
   socialWrapper.className = 'default-content-wrapper footer-social-inner';
-  socialWrapper.append(socialCell);
+  // Unwrap cell children so h2 and ul become direct flex siblings
+  while (socialCell.firstChild) socialWrapper.append(socialCell.firstChild);
+  socialCell.remove();
   socialSection.append(socialWrapper);
 
   if (legalSection) {
