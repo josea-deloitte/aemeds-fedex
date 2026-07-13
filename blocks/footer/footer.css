@@ -88,12 +88,13 @@
 .footer .footer-social-inner {
   display: flex;
   gap: 20px;
-  align-items: flex-start;
+  align-items: center;
 }
 
 .footer .footer-social h2,
 .footer .footer-social h3 {
   margin: 0;
+  white-space: nowrap;
   color: var(--fedex-purple);
   font-family: var(--body-font-family);
   font-size: 12px;
@@ -104,10 +105,14 @@
 .footer .footer-social ul {
   display: flex;
   flex-wrap: wrap;
-  gap: 6px 14px;
+  gap: 8px;
   margin: 0;
   padding: 0;
   list-style: none;
+}
+
+.footer .footer-social li {
+  margin: 0;
 }
 
 .footer .footer-social a:any-link {
@@ -121,6 +126,119 @@
 .footer .footer-social a:focus-visible {
   color: var(--fedex-purple);
   text-decoration: underline;
+}
+
+.footer .footer-social a.footer-social-link:any-link {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 34px;
+  height: 34px;
+  border-radius: 50%;
+  background-color: var(--fedex-purple);
+  color: #fff;
+  text-decoration: none;
+}
+
+.footer .footer-social a.footer-social-link:hover,
+.footer .footer-social a.footer-social-link:focus-visible {
+  background-color: var(--fedex-orange);
+  color: #fff;
+  text-decoration: none;
+}
+
+.footer .footer-main .footer-accordion-panel.footer-two-col {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0 16px;
+}
+
+.footer .footer-lang-selector {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.footer .footer-country-link:any-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  color: #333;
+  font-size: 12px;
+  text-decoration: none;
+}
+
+.footer .footer-country-link:hover,
+.footer .footer-country-link:focus-visible {
+  color: var(--fedex-purple);
+  text-decoration: underline;
+}
+
+.footer .footer-lang-dropdown {
+  position: relative;
+}
+
+.footer .footer-lang-toggle {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  border: 1px solid #ccc;
+  padding: 6px 10px;
+  background: #fff;
+  color: #333;
+  font-size: 12px;
+  cursor: pointer;
+  min-width: 100px;
+}
+
+.footer .footer-lang-toggle:hover {
+  border-color: var(--fedex-purple);
+  color: var(--fedex-purple);
+}
+
+.footer .footer-lang-chevron::after {
+  content: '▾';
+  font-size: 10px;
+}
+
+.footer .footer-lang-toggle[aria-expanded='true'] .footer-lang-chevron::after {
+  content: '▴';
+}
+
+.footer .footer-lang-options {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  min-width: 100%;
+  border: 1px solid #ccc;
+  background: #fff;
+  list-style: none;
+  padding: 4px 0;
+  margin: 0;
+  z-index: 100;
+  display: none;
+  box-shadow: 0 2px 6px rgb(0 0 0 / 15%);
+}
+
+.footer .footer-lang-toggle[aria-expanded='true'] + .footer-lang-options {
+  display: block;
+}
+
+.footer .footer-lang-options li {
+  margin: 0;
+}
+
+.footer .footer-lang-options a:any-link {
+  display: block;
+  padding: 6px 12px;
+  color: #333;
+  font-size: 12px;
+  text-decoration: none;
+}
+
+.footer .footer-lang-options a:hover {
+  background: #f5f5f5;
+  color: var(--fedex-purple);
 }
 
 .footer .footer-legal {
@@ -181,6 +299,38 @@
   text-decoration: underline;
 }
 
+.footer .footer-lang-options li[aria-selected='true'] a {
+  font-weight: 600;
+  color: var(--fedex-purple);
+}
+
+.footer .footer-country-link .icon {
+  display: inline-flex;
+  width: 16px;
+  height: 16px;
+  flex-shrink: 0;
+}
+
+.footer .footer-country-link .icon svg {
+  width: 16px;
+  height: 16px;
+  fill: currentcolor;
+}
+
+.footer .footer-social a.footer-social-link .icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 16px;
+  height: 16px;
+}
+
+.footer .footer-social a.footer-social-link .icon svg {
+  width: 16px;
+  height: 16px;
+  fill: currentcolor;
+}
+
 @media (width < 900px) {
   .footer > div {
     padding: 24px 16px 0;
@@ -225,8 +375,22 @@
   }
 
   .footer .footer-main .footer-accordion-panel.is-open {
-    max-height: 380px;
+    max-height: 600px;
     padding: 4px 0 12px;
+  }
+
+  .footer .footer-main .footer-accordion-panel.footer-two-col {
+    display: block;
+  }
+
+  .footer .footer-lang-dropdown {
+    position: static;
+  }
+
+  .footer .footer-lang-options {
+    position: static;
+    box-shadow: none;
+    border: 1px solid #ccc;
   }
 
   .footer .footer-social {
@@ -243,11 +407,7 @@
   }
 
   .footer .footer-social ul {
-    display: block;
-  }
-
-  .footer .footer-social li {
-    margin-bottom: 6px;
+    flex-wrap: wrap;
   }
 
   .footer .footer-legal {
