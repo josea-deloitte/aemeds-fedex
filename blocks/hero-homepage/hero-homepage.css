@@ -1,0 +1,356 @@
+/* =============================================================
+   hero-homepage block
+   Matches the FedEx homepage hero_homepage_v1 component:
+   full-bleed video (or image) background + text overlay +
+   right-side product image + bottom quick-action strip.
+   ============================================================= */
+
+/* --- Full-bleed escape: counteract section max-width + padding --- */
+.hero-homepage {
+  margin-left: calc(50% - 50vw);
+  width: 100vw;
+
+  /* The quick-action strip uses negative translateY so the section below
+     must not clip it; ensure the block itself doesn't clip it either. */
+}
+
+/* ── Media area (video / image background) ────────────────────── */
+.hero-homepage-media {
+  position: relative;
+  height: 320px;
+  overflow: hidden;
+  background-color: #1a1a1a;
+}
+
+/* Background video elements */
+.hero-homepage-video-desktop,
+.hero-homepage-video-mobile {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+}
+
+/* Mobile: show mobile video, hide desktop video */
+.hero-homepage-video-desktop {
+  display: none;
+}
+
+/* Background image fallback */
+.hero-homepage-bg-image {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+}
+
+/* ── Content overlay (text + product image) ───────────────────── */
+.hero-homepage-content {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 24px 16px;
+  max-width: var(--section-max-width);
+
+  /* Centre within the full-bleed media layer */
+  margin: 0 auto;
+  left: 50%;
+  transform: translateX(-50%);
+  right: auto;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+/* Left column: heading + body + CTA */
+.hero-homepage-text {
+  position: relative;
+  z-index: 1;
+  flex: 0 1 auto;
+  max-width: 55%;
+}
+
+.hero-homepage-text h1 {
+  margin: 0 0 20px;
+  color: #fff;
+  font-family: var(--heading-font-family);
+  font-size: 32px;
+  font-weight: 400;
+  line-height: 1.1;
+  text-shadow: 0 1px 4px rgb(0 0 0 / 40%);
+}
+
+.hero-homepage-text p {
+  margin: 0 0 16px;
+  color: #fff;
+  font-size: 15px;
+  line-height: 1.5;
+}
+
+/* CTA: outlined pill button */
+.hero-homepage-cta:any-link {
+  display: inline-block;
+  padding: 10px 22px;
+  border: 2px solid #fff;
+  border-radius: 999px;
+  color: #fff;
+  font-size: 13px;
+  font-weight: 500;
+  letter-spacing: 0.5px;
+  text-decoration: none;
+  text-transform: uppercase;
+  transition:
+    background-color 0.2s ease,
+    color 0.2s ease;
+}
+
+.hero-homepage-cta:hover,
+.hero-homepage-cta:focus-visible {
+  background-color: #fff;
+  color: var(--fedex-purple);
+  outline-offset: 3px;
+}
+
+/* Right column: product / screenshot image (hidden on mobile) */
+.hero-homepage-product {
+  display: none;
+  position: relative;
+  z-index: 1;
+  flex: 0 1 auto;
+  max-width: 52%;
+  margin-left: 16px;
+}
+
+.hero-homepage-product img {
+  display: block;
+  max-width: 100%;
+  height: auto;
+  border-radius: 4px;
+}
+
+/* ── Video controls (bottom-right of media area) ──────────────── */
+.hero-homepage-controls {
+  position: absolute;
+  right: 16px;
+  bottom: 16px;
+  z-index: 2;
+  display: flex;
+  gap: 4px;
+}
+
+.hero-homepage-ctrl {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  padding: 0;
+  border: none;
+  border-radius: 50%;
+  background: transparent;
+  cursor: pointer;
+  opacity: 0.8;
+  transition: opacity 0.2s;
+}
+
+.hero-homepage-ctrl:hover,
+.hero-homepage-ctrl:focus-visible {
+  opacity: 1;
+  outline: 2px solid rgb(255 255 255 / 60%);
+  outline-offset: 2px;
+}
+
+/* ── Quick-action strip ───────────────────────────────────────── */
+
+/* The strip sits directly below .hero-homepage-media and is pulled
+   up with a negative translateY so it visually overlaps the hero. */
+.hero-homepage-actions {
+  position: relative;
+  z-index: 3;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 16px;
+  max-width: calc(var(--section-max-width) - 60px);
+  margin: 0 auto;
+  padding: 20px 24px;
+  background-color: #f2f2f2;
+  border-radius: 24px;
+  transform: translateY(-50%);
+}
+
+/* Quick-links: icon + label stacked */
+.hero-homepage-quick-links {
+  display: flex;
+  flex: 1;
+  flex-wrap: wrap;
+  gap: 4px;
+  justify-content: space-around;
+  align-items: center;
+}
+
+.hero-homepage-quick-link:any-link {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+  padding: 4px 10px;
+  color: #333;
+  font-size: 12px;
+  font-weight: 500;
+  text-align: center;
+  text-decoration: none;
+  white-space: nowrap;
+  transition: color 0.15s;
+}
+
+.hero-homepage-quick-link:hover,
+.hero-homepage-quick-link:focus-visible {
+  color: var(--fedex-purple);
+  text-decoration: none;
+}
+
+.hero-homepage-quick-link .icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 28px;
+  height: 28px;
+}
+
+.hero-homepage-quick-link .icon img,
+.hero-homepage-quick-link .icon svg {
+  width: 28px;
+  height: 28px;
+}
+
+/* Tracking form */
+.hero-homepage-track {
+  display: flex;
+  align-items: stretch;
+}
+
+.hero-homepage-track input[type='text'] {
+  flex: 1;
+  min-width: 160px;
+  padding: 10px 14px;
+  border: 1px solid #ccc;
+  border-right: none;
+  border-radius: 4px 0 0 4px;
+  background: #fff;
+  color: #333;
+  font-size: 14px;
+  line-height: 1.4;
+}
+
+.hero-homepage-track input[type='text']::placeholder {
+  color: #999;
+}
+
+.hero-homepage-track input[type='text']:focus {
+  outline: none;
+  border-color: var(--fedex-purple);
+}
+
+.hero-homepage-track-btn {
+  padding: 10px 20px;
+  border: none;
+  border-radius: 0 4px 4px 0;
+  background-color: var(--fedex-orange);
+  color: #fff;
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+.hero-homepage-track-btn:hover {
+  background-color: var(--fedex-orange-dark);
+}
+
+/* =============================================================
+   Responsive – 600px (tablet portrait)
+   ============================================================= */
+@media (width >= 600px) {
+  .hero-homepage-media {
+    height: 380px;
+  }
+
+  .hero-homepage-text h1 {
+    font-size: 40px;
+  }
+}
+
+/* =============================================================
+   Responsive – 900px (desktop)
+   ============================================================= */
+@media (width >= 900px) {
+  .hero-homepage-media {
+    height: 420px;
+  }
+
+  /* Swap to desktop video */
+  .hero-homepage-video-desktop {
+    display: block;
+  }
+
+  .hero-homepage-video-mobile {
+    display: none;
+  }
+
+  .hero-homepage-content {
+    padding: 40px 32px;
+  }
+
+  .hero-homepage-text {
+    max-width: 44%;
+  }
+
+  .hero-homepage-text h1 {
+    font-size: 46px;
+    line-height: 1.04;
+  }
+
+  .hero-homepage-cta:any-link {
+    padding: 12px 28px;
+    font-size: 14px;
+  }
+
+  /* Show the product/screenshot column */
+  .hero-homepage-product {
+    display: block;
+  }
+
+  .hero-homepage-controls {
+    right: 32px;
+    bottom: 24px;
+  }
+
+  .hero-homepage-actions {
+    flex-wrap: nowrap;
+    padding: 32px 40px;
+    max-width: calc(var(--section-max-width) - 60px);
+    transform: translateY(-50%);
+  }
+
+  .hero-homepage-quick-links {
+    flex-wrap: nowrap;
+    gap: 0;
+  }
+
+  .hero-homepage-quick-link:any-link {
+    min-width: 80px;
+    padding: 4px 16px;
+  }
+
+  .hero-homepage-track input[type='text'] {
+    min-width: 200px;
+  }
+}
