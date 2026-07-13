@@ -1,87 +1,116 @@
 import { getMetadata } from '../../scripts/aem.js';
 import { loadFragment } from '../fragment/fragment.js';
 
-const isDesktop = window.matchMedia('(min-width: 900px)');
+const desktopMedia = window.matchMedia('(min-width: 900px)');
 
-/**
- * Gap fix: the CMS/da.live Columns block renders footer links as
- * "<p>- <a>Link</a><br>- <a>Link</a></p>" instead of a proper list.
- * This function converts those paragraphs into semantic <ul><li> lists.
- * @param {Element} footer
- */
-function cleanFooterLinks(footer) {
-  footer.querySelectorAll('.columns > div > div').forEach((col) => {
-    col.querySelectorAll('p').forEach((p) => {
-      const links = [...p.querySelectorAll('a')];
-      if (!links.length) return;
-      // Convert if it looks like a dash-separated link paragraph
-      if (p.innerHTML.includes('<br>') || p.textContent.trimStart().startsWith('-')) {
-        const ul = document.createElement('ul');
-        links.forEach((link) => {
-          const li = document.createElement('li');
-          li.append(link.cloneNode(true));
-          ul.append(li);
-        });
-        p.replaceWith(ul);
-      }
+function slugify(text) {
+  return text
+    .toLowerCase()
+    .trim()
+    .replace(/[^a-z0-9]+/g, '-')
+    .replace(/^-+|-+$/g, '');
+}
+
+function convertParagraphLinksToList(scope) {
+  scope.querySelectorAll('p').forEach((p) => {
+    const links = [...p.querySelectorAll('a')];
+    if (!links.length) return;
+
+    const looksLikeList = p.innerHTML.includes('<br>') || p.textContent.trimStart().startsWith('-');
+    if (!looksLikeList) return;
+
+    const ul = document.createElement('ul');
+    links.forEach((link) => {
+      const li = document.createElement('li');
+      li.append(link.cloneNode(true));
+      ul.append(li);
+    });
+    p.replaceWith(ul);
+  });
+}
+
+function ensureCopyrightSymbol(legalSection) {
+  const paragraph = legalSection ? legalSection.querySelector('p') : null;
+  if (!paragraph) return;
+  if (!paragraph.textContent.includes('©')) {
+    paragraph.textContent = `© ${paragraph.textContent.trim()}`;
+  }
+}
+
+function extractSocialSection(root, mainSection, legalSection) {
+  const columnsRow = mainSection?.querySelector('.columns > div');
+  if (!columnsRow) return;
+
+  const cells = [...columnsRow.children];
+  const socialCell = cells.find((cell) => {
+    const heading = cell.querySelector('h2, h3');
+    return heading && /follow fedex/i.test(heading.textContent);
+  });
+  if (!socialCell) return;
+
+  const socialSection = document.createElement('div');
+  socialSection.className = 'section footer-social';
+
+  const socialWrapper = document.createElement('div');
+  socialWrapper.className = 'default-content-wrapper footer-social-inner';
+  socialWrapper.append(socialCell);
+  socialSection.append(socialWrapper);
+
+  if (legalSection) {
+    root.insertBefore(socialSection, legalSection);
+  } else {
+    root.append(socialSection);
+  }
+}
+
+function buildAccordions(mainSection) {
+  const columns = mainSection?.querySelectorAll('.columns > div > div') || [];
+
+  columns.forEach((column, index) => {
+    const heading = column.querySelector('h2, h3');
+    if (!heading) return;
+
+    const panel = document.createElement('div');
+    panel.className = 'footer-accordion-panel';
+
+    [...column.children].forEach((child) => {
+      if (child !== heading) panel.append(child);
+    });
+
+    const button = document.createElement('button');
+    button.className = 'footer-accordion-toggle';
+    button.type = 'button';
+    button.textContent = heading.textContent.trim();
+
+    const panelId = `footer-accordion-${slugify(button.textContent)}-${index}`;
+    button.setAttribute('aria-controls', panelId);
+    panel.id = panelId;
+
+    heading.replaceWith(button);
+    column.append(panel);
+
+    button.addEventListener('click', () => {
+      if (desktopMedia.matches) return;
+      const expanded = button.getAttribute('aria-expanded') === 'true';
+      button.setAttribute('aria-expanded', expanded ? 'false' : 'true');
+      panel.classList.toggle('is-open', !expanded);
     });
   });
 }
 
-/**
- * Gap fix: ensure the copyright paragraph has the © symbol.
- * @param {Element} footer
- */
-function fixCopyright(footer) {
-  const legalSection = footer.querySelector('.section:last-of-type');
-  if (!legalSection) return;
-  legalSection.querySelectorAll('p').forEach((p) => {
-    if (p.textContent.includes('FedEx') && !p.textContent.includes('©')) {
-      p.textContent = `© ${p.textContent.trim()}`;
-    }
-  });
-}
+function syncAccordionState(footerRoot) {
+  const buttons = footerRoot.querySelectorAll('.footer-accordion-toggle');
 
-/**
- * Gap fix: wrap each footer link column in a mobile accordion.
- * On desktop the toggle is hidden and content stays visible.
- * Selector fixed: the inner div doesn't carry .footer — query from the passed element.
- * @param {Element} footer
- */
-function decorateFooterAccordion(footer) {
-  // Gap fix: was '.footer .section:first-of-type' — that selector never matched
-  // because `footer` here is the plain inner div, not the .footer block element.
-  footer.querySelectorAll('.section:first-of-type .columns > div > div').forEach((col) => {
-    const heading = col.querySelector('h2, h3');
-    if (!heading || isDesktop.matches) return;
+  buttons.forEach((button) => {
+    const panel = footerRoot.querySelector(`#${button.getAttribute('aria-controls')}`);
+    if (!panel) return;
 
-    const toggle = document.createElement('button');
-    toggle.className = 'footer-col-toggle';
-    toggle.setAttribute('aria-expanded', 'false');
-    toggle.textContent = heading.textContent;
-
-    const body = document.createElement('div');
-    body.className = 'footer-col-body';
-    [...col.children].forEach((child) => {
-      if (child !== heading) body.append(child);
-    });
-
-    heading.replaceWith(toggle);
-    col.append(body);
-
-    toggle.addEventListener('click', () => {
-      const expanded = toggle.getAttribute('aria-expanded') === 'true';
-      toggle.setAttribute('aria-expanded', String(!expanded));
-      body.classList.toggle('is-open', !expanded);
-    });
-  });
-
-  // When viewport grows to desktop, open all accordion bodies
-  isDesktop.addEventListener('change', () => {
-    if (isDesktop.matches) {
-      footer.querySelectorAll('.footer-col-body').forEach((body) => {
-        body.classList.add('is-open');
-      });
+    if (desktopMedia.matches) {
+      button.setAttribute('aria-expanded', 'true');
+      panel.classList.add('is-open');
+    } else {
+      button.setAttribute('aria-expanded', 'false');
+      panel.classList.remove('is-open');
     }
   });
 }
@@ -92,17 +121,30 @@ function decorateFooterAccordion(footer) {
  */
 export default async function decorate(block) {
   const footerMeta = getMetadata('footer');
-  const footerPath = footerMeta ? new URL(footerMeta, window.location).pathname : '/footer';
+  const footerPath = footerMeta ? new URL(footerMeta, window.location).pathname : '/fragments/footer';
   const fragment = await loadFragment(footerPath);
 
   block.textContent = '';
-  const footer = document.createElement('div');
-  while (fragment.firstElementChild) footer.append(fragment.firstElementChild);
+  const footerRoot = document.createElement('div');
+  while (fragment.firstElementChild) footerRoot.append(fragment.firstElementChild);
 
-  // Run all decoration passes before appending to the DOM
-  cleanFooterLinks(footer);
-  fixCopyright(footer);
-  decorateFooterAccordion(footer);
+  const mainSection = footerRoot.querySelector('.section:first-of-type');
+  const legalSection = footerRoot.querySelector('.section:last-of-type');
 
-  block.append(footer);
+  if (mainSection) {
+    mainSection.classList.add('footer-main');
+    convertParagraphLinksToList(mainSection);
+  }
+
+  if (legalSection) {
+    legalSection.classList.add('footer-legal');
+    ensureCopyrightSymbol(legalSection);
+  }
+
+  extractSocialSection(footerRoot, mainSection, legalSection);
+  buildAccordions(mainSection);
+  syncAccordionState(footerRoot);
+  desktopMedia.addEventListener('change', () => syncAccordionState(footerRoot));
+
+  block.append(footerRoot);
 }
