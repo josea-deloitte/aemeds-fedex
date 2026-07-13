@@ -124,20 +124,44 @@ A page can override it with a `footer` row in its Metadata table.
 
 ### Document structure — two sections separated by `---`
 
-#### Section 1 — Link columns
+#### Section 1 — Link columns (`Columns` block, four cells)
 
-Use a **Columns** block. Each column cell contains a Heading 2 and a bulleted list of links.
+Use a **Columns** block with exactly **four cells** in this order:
 
-**da.live table syntax:**
-
-| Columns | | |
+| # | Cell heading | What to put in it |
 |---|---|---|
-| ## Our Company<br>- [About FedEx](/en-us/about.html)<br>- [Careers](/en-us/careers.html)<br>- [Investor Relations](/en-us/investor-relations.html)<br>- [FedEx Newsroom](/en-us/newsroom.html)<br>- [Corporate Responsibility](/en-us/sustainability.html) | ## More From FedEx<br>- [FedEx Compatible](/en-us/compatible.html)<br>- [Developer Portal](/en-us/developer.html)<br>- [FedEx Logistics](/en-us/logistics.html)<br>- [FedEx Cross Border](/en-us/cross-border.html) | ## Follow FedEx<br>- [Facebook](https://www.facebook.com/FedEx)<br>- [X](https://x.com/FedEx)<br>- [Instagram](https://www.instagram.com/fedex)<br>- [LinkedIn](https://www.linkedin.com/company/fedex)<br>- [YouTube](https://www.youtube.com/fedex) |
+| 1 | `Our Company` | Two bulleted lists (5 links, then 4 links) |
+| 2 | `More From FedEx` | One bulleted list |
+| 3 | `Language` | Country link paragraph + language options list |
+| 4 | `Follow FedEx` | Social platform links (text auto-replaced with icons) |
 
-> **Rules:**
-> - Use exactly **`## Heading`** (H2) as the column label — the CSS renders it as small uppercase text.
-> - Keep column count to **2–4**. The grid adjusts: 1 column on mobile → 2 on tablet → 3–4 on desktop.
-> - On **mobile**, each column collapses into an accordion. The H2 text becomes the toggle button label.
+> The JS extracts the **Follow FedEx** column into a separate social strip above the legal bar. The **Language** column is transformed into a country-selector + language dropdown. The **Our Company** two-list layout renders as a 2-column sub-grid on desktop.
+
+---
+
+**Column 1 — Our Company** (two `<ul>` lists in one cell):
+
+| Columns | | | |
+|---|---|---|---|
+| ## Our Company<br><br>- [About FedEx](https://www.fedex.com/en-us/about.html)<br>- [Our Portfolio](https://www.fedex.com/en-us/about/company-structure.html)<br>- [Investor Relations](https://investors.fedex.com/home/default.aspx)<br>- [Careers](https://careers.fedex.com/fedex/)<br>- [Transportation Contracting Opportunities](https://www.contracting.fedex.com/)<br><br>- [FedEx Blog](https://www.fedex.com/en-us/blog.html)<br>- [Corporate Responsibility](https://www.fedex.com/en-us/about/corporate-social-responsibility.html)<br>- [Newsroom](https://newsroom.fedex.com/)<br>- [Contact Us](https://www.fedex.com/en-us/customer-support.html) | ## More From FedEx<br><br>- [FedEx Compatible](https://www.fedex.com/en-us/compatible.html)<br>- [FedEx Developer Portal](https://developer.fedex.com/api/en-us/home.html)<br>- [FedEx Logistics](https://www.fedex.com/en-us/logistics.html) | ## Language<br><br>[United States](https://www.fedex.com/?location=home)<br><br>- [English](https://www.fedex.com/en-us/home.html)<br>- [Español](https://www.fedex.com/es-us/home.html) | ## Follow FedEx<br><br>- [Newsletter](https://www.fedex.com/en-us/email.html)<br>- [Facebook](https://www.facebook.com/FedEx/)<br>- [Twitter](https://twitter.com/fedex)<br>- [Instagram](https://www.instagram.com/fedex/)<br>- [LinkedIn](https://www.linkedin.com/company/fedex)<br>- [YouTube](https://www.youtube.com/user/fedex/custom?sub_confirmation=1)<br>- [Pinterest](https://www.pinterest.com/FedEx/) |
+
+---
+
+**Language column rules:**
+- The **paragraph** must contain exactly one link — the country name (e.g. "United States"). The JS prepends a globe icon automatically.
+- The **bulleted list** below it is the language dropdown options.
+- To mark the active language, add `aria-current="true"` to its link in the rich-text editor. If none is marked, the first list item is selected.
+- The heading must be exactly `Language`.
+
+**Follow FedEx column rules:**
+- The heading must be exactly `Follow FedEx` — the JS uses `/follow fedex/i` to locate and extract this column.
+- Link text is matched to icon SVGs by keyword (case-insensitive). Supported keywords: `newsletter`, `email`, `facebook`, `twitter`, `instagram`, `linkedin`, `youtube`, `pinterest`.
+- Do not rename the links to something unrecognisable — the icon mapping will fail silently and the link text will show instead.
+
+**General column rules:**
+- Use exactly **`## Heading`** (H2) for each column label.
+- Column headings must not be renamed from the values the JS relies on (`Follow FedEx`, `Language`).
+- On **mobile**, each column collapses into an accordion; H2 becomes the toggle button label.
 
 ---
 
@@ -148,16 +172,17 @@ A copyright paragraph followed by a bulleted list of policy links. Always the **
 ```
 © FedEx 1995–2026
 
-- [Site Map](/en-us/site-map.html)
-- [Terms of Use](/en-us/terms-of-use.html)
-- [Privacy & Security](/en-us/privacy.html)
-- [Ad Choices](/en-us/ad-choices.html)
+- [Site Map](https://www.fedex.com/en-us/sitemap.html)
+- [Terms of Use](https://www.fedex.com/en-us/terms-of-use.html)
+- [Privacy & Security](https://www.fedex.com/en-us/trust-center.html)
+- [Ad Choices](https://www.fedex.com/en-us/trust-center/privacy.html#section7)
 ```
 
 > **Rules:**
-> - Copyright must be in a `<p>` (plain paragraph, not a heading).
-> - Legal links render horizontally; keep them to **4–6 items**.
-> - Do **not** add a Columns block here — the CSS flexes the paragraph and list automatically.
+> - Copyright must be a plain `<p>` (not a heading or list item). The JS adds `©` if missing.
+> - Legal links render horizontally with `|` separators; keep to **4–6 items**.
+> - Do **not** add a Columns block here — the CSS handles flex layout automatically.
+> - This section always renders as a full-width purple bar.
 
 ---
 
