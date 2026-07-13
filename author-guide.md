@@ -22,7 +22,7 @@ The following CSS custom properties are declared in `styles/styles.css` and used
 | ---------------------- | --------- | -------------------------------------- |
 | `--fedex-purple`       | `#4d148c` | Header background, primary interactive |
 | `--fedex-purple-dark`  | `#330066` | Hover / focus ring on dark backgrounds |
-| `--fedex-orange`       | `#ff6600` | CTAs, active-item underline, footer top border |
+| `--fedex-orange`       | `#ff6600` | CTAs, wordmark "Ex", skip-link, footer top border |
 | `--fedex-orange-dark`  | `#e05504` | Orange hover state                     |
 | `--background-color`   | `#ffffff` | Page background                        |
 | `--light-color`        | `#f8f8f8` | Footer background, light sections      |
@@ -35,26 +35,26 @@ The following CSS custom properties are declared in `styles/styles.css` and used
 
 ### Where to author
 
-Edit the document at **`/nav`** (site root).  
+Edit the document at **`/fragments/nav`**.  
 A page can load a different nav fragment by adding a `nav` row to its Metadata table (see [Page-level overrides](#page-level-overrides)).
 
 ### Document structure — three sections separated by `---`
 
 #### Section 1 — Brand (logo / home link)
 
-Write a single **bold link**. The link text can be the site name or replaced by an image.
+Write a single link to the homepage. With a logo image uploaded to the DAM:
 
 ```
-**[FedEx](/)**
+[![FedEx logo](…dam image…)](/)
 ```
 
-Or with a logo image uploaded to the DAM:
+Or as a plain text link:
 
 ```
-[![FedEx logo](/icons/fedex-logo.svg) FedEx](/)
+[FedEx](/)
 ```
 
-> **Rule:** keep this section to exactly one paragraph / one link. The JS strips the button class and renders it as the logo mark.
+> **Rule:** keep this section to exactly one paragraph / one link. If the link has **no image** (or the image fails to load), the header automatically renders a Fed/Ex text wordmark in brand colors — so the text-only form is always safe.
 
 ---
 
@@ -65,42 +65,43 @@ Write a single **bulleted list**. Top-level items with a nested list become **dr
 ```
 - Shipping
   - [Create a Shipment](/en-us/shipping/create.html)
-  - [Calculate Shipping Rates](/en-us/online/rating.html)
-  - [FedEx One Rate](/en-us/shipping/one-rate.html)
-  - [Explore Shipping Services](/en-us/service-guide.html)
+  - [Shipping Rates & Delivery Times](/en-us/online/rating.html)
+  - [Schedule & Manage Pickups](/en-us/shipping/schedule-manage-pickups.html)
+  - **[All Shipping Services](/en-us/shipping.html)**
 - Tracking
-  - [Track a Shipment](/en-us/tracking.html)
-  - [FedEx Delivery Manager](/en-us/delivery-manager.html)
   - [Advanced Shipment Tracking](/en-us/tracking/advanced.html)
+  - [Manage Your Delivery](/en-us/delivery-manager.html)
+  - **[All Tracking Services](/en-us/tracking.html)**
 - Design & Print
-  - [Explore Printing Services](/en-us/printing.html)
-  - [Posters & Signs](/en-us/printing/posters.html)
-  - [Document Printing](/en-us/printing/documents.html)
+  - [Explore Print, Products & Design](/en-us/printing.html)
+  - [Browse Services](/en-us/printing/services.html)
 - [Locations](/en-us/locations.html)
 - Support
   - [Customer Support](/en-us/customer-support.html)
   - [Small Business Center](/en-us/small-business.html)
-  - [Service Alerts](/en-us/service-alerts.html)
 ```
 
 > **Rules:**
 > - Keep top-level items to **5 or fewer** — the bar does not wrap gracefully.
-> - Keep dropdown sub-items to **6 or fewer**.
-> - A top-level item that has a nested list must **not** have its own link (`- Shipping` not `- [Shipping](…)`). The click handler opens the dropdown.
+> - Keep dropdown sub-items to **8 or fewer**.
+> - A top-level item that has a nested list must **not** have its own link (`- Shipping` not `- [Shipping](…)`) — it becomes a toggle **button**, so a link there would never navigate.
+> - A **bold** dropdown link renders as the FedEx call-to-action row: uppercase, bold, blue (like "ALL SHIPPING SERVICES" on fedex.com). Put it last in its dropdown.
 
 ---
 
 #### Section 3 — Tools (right-hand utilities)
 
-Short links displayed in the top-right area of the header. An icon preceding the text is optional — use the `:icon-name:` inline syntax.
+Short links displayed at the right edge of the bar, one paragraph per tool. An icon preceding the text is optional — use the `:icon-name:` inline syntax.
 
 ```
-:icon-search: [Search](/en-us/search.html)
-[Sign In](/en-us/secure-login.html)
+:search: [Search](/en-us/search.html)
+
+[Sign Up or Log In](/en-us/secure-login.html)
 ```
 
 > **Rules:**
-> - The text **"Sign In"** (or "Log In") is automatically decorated as a ghost button by the JS.
+> - A tool with an icon renders **icon-only**; its link text becomes the accessible label (screen readers still announce "Search").
+> - A link whose text contains **Sign In / Sign Up / Log In** is tagged as the sign-in link. It renders as a plain white text link — fedex.com does not box this in a button.
 > - Icons must be SVG files placed in the `/icons/` folder (e.g. `/icons/search.svg`).
 > - Keep tools to **3 items or fewer**.
 
@@ -108,10 +109,10 @@ Short links displayed in the top-right area of the header. An icon preceding the
 
 ### How the Shipping dropdown works
 
-1. Any Section 2 list item that contains a nested `<ul>` receives the `nav-drop` CSS class.
-2. On **desktop** a click toggles `aria-expanded="true"` on that `<li>`, which CSS uses to show the dropdown panel with a slide-down animation.
-3. On **mobile** all nav sections are hidden behind the hamburger menu; clicking a `nav-drop` item expands inline.
-4. Pressing **Escape** collapses open dropdowns. Moving focus outside the nav also collapses them.
+1. Any Section 2 list item that contains a nested list is rebuilt as a real `<button aria-expanded="false" aria-controls="…">` plus a panel (`.nav-submenu`).
+2. On **desktop (≥ 900px)** the dropdown opens on hover (mouse) and on click / Enter / Space. The open trigger inverts to a white background with purple text; the panel is a 240px white card with the fedex.com offset shadow.
+3. On **mobile (< 900px)** the hamburger slides a drawer in from the right, below the 60px bar. Tapping an item expands it in place (accordion): the open trigger inverts to purple with white text. Page scrolling is locked while the drawer is open.
+4. Pressing **Escape** closes open dropdowns first, then the drawer. Clicking outside the nav or moving focus out of it also closes dropdowns.
 
 ---
 
@@ -119,7 +120,7 @@ Short links displayed in the top-right area of the header. An icon preceding the
 
 ### Where to author
 
-Edit the document at **`/footer`** (site root).  
+Edit the document at **`/fragments/footer`**.  
 A page can override it with a `footer` row in its Metadata table.
 
 ### Document structure — two sections separated by `---`
@@ -192,10 +193,10 @@ To load a different nav or footer fragment on a specific page, add a **Metadata*
 
 | Metadata | |
 |---|---|
-| nav | /de/nav |
-| footer | /de/footer |
+| nav | /de/fragments/nav |
+| footer | /de/fragments/footer |
 
-This is useful for localized pages, campaign landing pages, or microsites that need a simplified header.
+This is useful for localized pages, campaign landing pages, or microsites that need a simplified header. The same mechanism points test pages at draft fragments (e.g. `nav` → `/drafts/fragments/nav`).
 
 ---
 
@@ -221,13 +222,14 @@ Inline icons use the syntax `:icon-name:` — e.g. `:icon-search:` renders the f
 
 ---
 
-## Dev-only fixtures
+## Dev fixtures & test content
 
-While CMS content is being built, local HTML fixtures serve the same paths:
+The CMS documents at `/fragments/nav` and `/fragments/footer` are published — the header and footer work against the proxy with no fixtures. The `drafts/` folder holds test content that **is** deployed (useful for PR demo links):
 
-| File | Path served |
-|---|---|
-| `nav.plain.html` | `/nav` |
-| `footer.plain.html` | `/footer` |
+| File | Path served | Purpose |
+|---|---|---|
+| `drafts/fragments/nav.plain.html` | `/drafts/fragments/nav` | Full FedEx nav (5 dropdowns, CTA rows, wordmark fallback) |
+| `drafts/header-test.html` | `/drafts/header-test` | Page wired to the draft nav via its `nav` metadata |
+| `drafts/home.plain.html` | `/drafts/home` | Sample homepage with all content blocks |
 
-These files are listed in `.hlxignore` and are **not** deployed. Delete them once the CMS documents are published and previewed.
+`footer.plain.html` at the repo root is a legacy local fixture excluded via `.hlxignore`; it can be deleted now that the CMS footer document is published.

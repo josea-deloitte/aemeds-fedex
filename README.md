@@ -54,4 +54,4 @@ npm run lint
 2. Start the AEM Proxy with the local test content: `aem up --html-folder drafts`
 3. Open the sample homepage at `http://localhost:3000/drafts/home`
 
-The `drafts/` folder holds local test pages, and the root-level `nav.plain.html` / `footer.plain.html` are local stand-ins for the shared `/nav` and `/footer` CMS documents (both are `.hlxignore`d and can be deleted once the real documents are published).
+The `drafts/` folder holds test pages and draft fragments (e.g. `/drafts/header-test` exercises the full FedEx header navigation). Header and footer content loads from the published CMS documents at `/fragments/nav` and `/fragments/footer`.

@@ -1,10 +1,10 @@
 # Footer Block
 
-The site-wide footer: link columns on a light background, a "Follow FedEx" social icon strip, and a purple legal bar. It is **not authored per page** — it loads from a shared document at `/footer`.
+The site-wide footer: link columns on a light background, a "Follow FedEx" social icon strip, and a purple legal bar. It is **not authored per page** — it loads from a shared document at `/fragments/footer`.
 
 ## Where to author
 
-Edit the document at `/footer` (site root). A page can override it by adding a `footer` row to its Metadata table.
+Edit the document at `/fragments/footer`. A page can override it by adding a `footer` row to its Metadata table.
 
 ---
 
@@ -160,4 +160,4 @@ On screens narrower than **900 px**:
 
 ## Local development fixture
 
-`footer.plain.html` at the repo root is the local dev fixture served at `/footer`. It is excluded from deployment via `.hlxignore`. Delete it once the CMS document is published and previewed.
+`footer.plain.html` at the repo root is a legacy local fixture (the block loads `/fragments/footer`, which is now published in the CMS). It is excluded from deployment via `.hlxignore` and can be deleted.

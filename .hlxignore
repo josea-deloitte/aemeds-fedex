@@ -7,6 +7,5 @@ package-lock.json
 test/*
 drafts/fedex-home-source.html
 
-# local dev fixtures for the /nav and /footer fragments (real content is authored in the CMS)
-nav.plain.html
+# local dev fixture for the /fragments/footer fragment (real content is authored in the CMS)
 footer.plain.html

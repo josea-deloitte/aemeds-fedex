@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>Header Test | FedEx EDS</title>
+    <meta name="description" content="Dev-only page exercising the full FedEx header navigation structure.">
+    <meta name="nav" content="/drafts/fragments/nav">
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
+    <script nonce="aem" src="/scripts/aem.js" type="module"></script>
+    <script nonce="aem" src="/scripts/scripts.js" type="module"></script>
+    <link rel="stylesheet" href="/styles/styles.css"/>
+  </head>
+  <body>
+    <header></header>
+    <main>
+      <div>
+        <h1>Header test page</h1>
+        <p>This draft page loads the full FedEx navigation fixture from <code>/drafts/fragments/nav</code> via its <code>nav</code> metadata, exercising every header feature:</p>
+        <ul>
+          <li>Five dropdown items (Shipping, Tracking, Design &amp; Print, Locations, Support)</li>
+          <li>Bold-authored CTA links (&ldquo;All Shipping Services&rdquo;) rendered uppercase blue</li>
+          <li>Text-only brand link rendered as the Fed/Ex wordmark fallback</li>
+          <li>Search icon utility and &ldquo;Sign Up or Log In&rdquo; link</li>
+          <li>Mobile drawer with accordion sub-menus below 900px</li>
+        </ul>
+        <p>Scroll to confirm the fixed bar overlays content without covering the top of the page.</p>
+      </div>
+    </main>
+    <footer></footer>
+  </body>
+</html>
