@@ -139,14 +139,14 @@
   width: 34px;
   height: 34px;
   border-radius: 50%;
-  background-color: var(--fedex-purple);
+  background-color: var(--light-color);
   color: #fff;
   text-decoration: none;
 }
 
 .footer .footer-social a.footer-social-link:hover,
 .footer .footer-social a.footer-social-link:focus-visible {
-  background-color: var(--fedex-orange);
+  background-color: var(--light-color);
   color: #fff;
   text-decoration: none;
 }
