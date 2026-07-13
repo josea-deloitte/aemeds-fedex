@@ -149,6 +149,7 @@ function decorateSocialLinks(socialSection) {
     email: 'social-email',
     facebook: 'social-facebook',
     twitter: 'social-x',
+    x: 'social-x',
     instagram: 'social-instagram',
     linkedin: 'social-linkedin',
     youtube: 'social-youtube',
@@ -159,6 +160,7 @@ function decorateSocialLinks(socialSection) {
     email: 'Newsletter Signup',
     facebook: 'FedEx on Facebook',
     twitter: 'FedEx on Twitter',
+    x: 'FedEx on X',
     instagram: 'FedEx on Instagram',
     linkedin: 'FedEx on LinkedIn',
     youtube: 'FedEx on YouTube',
@@ -167,7 +169,9 @@ function decorateSocialLinks(socialSection) {
 
   socialSection.querySelectorAll('a').forEach((link) => {
     const linkText = link.textContent.trim().toLowerCase();
-    const iconKey = Object.keys(iconMap).find((k) => linkText.includes(k));
+    // exact match first (handles standalone "x"), then substring
+    const iconKey = Object.keys(iconMap).find((k) => linkText === k)
+      || Object.keys(iconMap).find((k) => linkText.includes(k));
     if (!iconKey) return;
     const iconSpan = document.createElement('span');
     iconSpan.className = `icon icon-${iconMap[iconKey]}`;

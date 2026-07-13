@@ -28,7 +28,7 @@ header nav {
   align-items: center;
   gap: 0 24px;
   margin: auto;
-  max-width: 1264px;
+  max-width: var(--section-max-width);
   height: var(--nav-height);
   padding: 0 20px;
   font-family: var(--body-font-family);

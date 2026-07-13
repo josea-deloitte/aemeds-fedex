@@ -44,6 +44,9 @@
 
   /* nav height */
   --nav-height: 64px;
+
+  /* layout */
+  --section-max-width: 970px;
 }
 
 /* fallback fonts */
@@ -307,7 +310,7 @@ main > .section {
 }
 
 main > .section > div {
-  max-width: 1200px;
+  max-width: var(--section-max-width);
   margin: auto;
   padding: 0 24px;
 }
