@@ -1,44 +1,76 @@
-/**
- * Decorates the hero block.
- * Splits authored content into a media layer and a content layer that
- * are stacked in a single grid cell (no absolute positioning).
- * Expects a two-row table: row 1 = LCP image, row 2 = headline and CTAs.
- * @param {Element} block The hero block element
- */
-export default function decorate(block) {
+function getCells(block) {
+  return [...block.children]
+    .map((row) => row.querySelector(':scope > div'))
+    .filter(Boolean);
+}
+
+function getHeroImage(row) {
+  if (!row) return null;
+  const picture = row.querySelector('picture');
+  if (picture) {
+    const img = picture.querySelector('img');
+    return { picture, img };
+  }
+
+  const img = row.querySelector('img');
+  if (!img) return null;
+  return { picture: null, img };
+}
+
+function buildContent(row) {
   const content = document.createElement('div');
   content.className = 'hero-content';
-  block.querySelectorAll(':scope > div > div').forEach((cell) => {
-    content.append(...cell.childNodes);
-  });
 
+  if (!row) return content;
+
+  const heading = row.querySelector('h1, h2, h3');
+  if (heading) content.append(heading);
+
+  const subtitle = [...row.querySelectorAll('p')].find((p) => !p.querySelector('a, img, picture'));
+  if (subtitle) {
+    subtitle.classList.add('hero-subtitle');
+    content.append(subtitle);
+  }
+
+  const links = [...row.querySelectorAll('a')];
+  if (links.length) {
+    const actions = document.createElement('div');
+    actions.className = 'hero-actions';
+    links.forEach((link) => actions.append(link));
+    content.append(actions);
+  }
+
+  return content;
+}
+
+/**
+ * Loads and decorates the hero block.
+ * Authoring structure:
+ * - Row 1: image
+ * - Row 2: heading + subtitle + CTA links
+ * @param {Element} block The block element
+ */
+export default function decorate(block) {
+  const [imageRow, contentRow] = getCells(block);
   const media = document.createElement('div');
   media.className = 'hero-media';
-  const picture = content.querySelector('picture');
-  const img = picture?.querySelector('img') || content.querySelector(':scope > img, :scope > p > img');
-  if (picture || img) {
-    block.classList.add('hero-has-media');
+
+  const imageData = getHeroImage(imageRow);
+  if (imageData) {
+    const { picture, img } = imageData;
     if (picture) {
-      const holder = picture.closest('p');
       media.append(picture);
-      if (holder) holder.remove();
     } else {
       media.append(img);
-      img.closest('p')?.remove();
     }
 
-    // LCP candidate: must not be lazy-loaded, regardless of pipeline defaults
-    const lcpImg = picture?.querySelector('img') || img;
-    if (lcpImg) {
-      lcpImg.loading = 'eager';
-      lcpImg.setAttribute('fetchpriority', 'high');
-      lcpImg.decoding = 'async';
+    if (img) {
+      img.loading = 'eager';
+      img.decoding = 'async';
+      img.setAttribute('fetchpriority', 'high');
     }
   }
 
-  content.querySelectorAll('p').forEach((p) => {
-    if (!p.textContent.trim() && !p.children.length) p.remove();
-  });
-
+  const content = buildContent(contentRow || imageRow);
   block.replaceChildren(media, content);
 }

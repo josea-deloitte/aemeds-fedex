@@ -1,29 +1,26 @@
 # Hero
 
-Full-width campaign banner at the top of the page. The image is the page's LCP element, so this block must be in the **first section** of the document.
+FedEx-style homepage hero with background image, headline, subtitle, and one or more CTA buttons.
 
-## Authoring
+## Authoring in da.live
 
-Create a table named `Hero` with two rows, one column:
+Create a table named `Hero` with **2 rows and 1 column**:
 
 | Hero |
 | --- |
-| *[image]* |
-| # Where now meets next<br>Ship, manage, track, and deliver with the speed and reliability you count on.<br>**[Ship Now](/en-us/shipping.html)** |
+| *[Hero image]* |
+| # Ship, manage, track, deliver<br>Your one-stop solution for shipping and tracking.<br>[Rate & Ship](/en-us/shipping.html) [Track](/en-us/tracking.html) |
 
-| Row | Content |
-| --- | --- |
-| 1 | The background image. Landscape, at least 1600px wide. **Alt text is required.** |
-| 2 | A Heading 1 (this should be the only H1 on the page), an optional short paragraph, and an optional call-to-action link. |
+### Row contract
 
-## Formatting rules
+| Row | Required | Content |
+| --- | --- | --- |
+| 1 | Yes | Background image (landscape). |
+| 2 | Yes | Heading (`h1`/`h2`), optional subtitle paragraph, and CTA links. |
 
-- **Bold link** → orange button.
-- Keep the headline short (a few words); body copy under ~2 sentences. Text sits over a purple gradient, bottom-centered on mobile and left-aligned on desktop.
-- The image is cropped to a fixed banner height on all screens — keep the key subject near the center of the frame.
+## Notes
 
-## Good to know
-
-- The block works without an image: text renders on a solid FedEx purple background.
-- Do not mark the image lazy or resize it manually — the platform optimizes it and the code forces eager, high-priority loading automatically.
-- The [Tracking Widget](../tracking-widget/README.md) is designed to sit in the **next** section and overlap the hero's bottom edge on desktop.
+- First link renders as the primary orange FedEx button.
+- Second link (and beyond) renders as secondary outline buttons.
+- The image is treated as LCP: eager loading + high fetch priority are set in JS.
+- Keep the hero in the first page section for best performance.

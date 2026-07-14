@@ -1,287 +1,239 @@
-/* FedEx global header — rebuilt from live gap analysis of fedex.com; no boilerplate styles */
-
 header {
-  /* fedex bar is 60px on mobile, 75px on desktop */
-  --nav-height: 60px;
-
-  /* measured fedex.com tokens */
-  --nav-divider: rgb(182 182 182 / 50%);
-  --nav-submenu-hover: #fafafa;
-  --nav-cta-color: #007ab7;
+  --header-height-mobile: 60px;
+  --header-height-desktop: 75px;
+  --fedex-purple: #4d148c;
+  --fedex-orange: #ff6200;
+  --fedex-link-blue: #007ab7;
 }
 
-@media (width >= 900px) {
-  header {
-    --nav-height: 75px;
-  }
-}
-
-/* fixed purple bar */
-header .nav-wrapper {
+header .header-wrapper {
   position: fixed;
   inset: 0 0 auto;
   z-index: 1100;
   background-color: var(--fedex-purple);
 }
 
-header nav {
+header .nav {
   box-sizing: border-box;
-  display: flex;
+  display: grid;
+  grid-template-columns: 1fr auto auto;
   align-items: center;
-  max-width: var(--section-max-width);
-  height: var(--nav-height);
+  height: var(--header-height-mobile);
+  max-width: 1210px;
   margin: 0 auto;
-  padding: 0 15px;
-  font-family: var(--body-font-family);
-  font-size: 14px;
-  line-height: 1;
-  color: var(--background-color);
+  padding: 0 16px;
+  color: #fff;
 }
 
-/* focus visibility on both purple and white surfaces */
-header nav a:focus-visible,
-header nav button:focus-visible {
-  outline: 2px solid currentcolor;
-  outline-offset: -4px;
+header .nav a,
+header .nav button {
+  font: inherit;
 }
 
-/* ── brand ──────────────────────────────────────────────────────────────── */
-header nav .nav-brand {
-  margin-right: auto;
-}
-
-header nav .nav-brand a {
-  display: flex;
+header .nav-brand a {
+  display: inline-flex;
   align-items: center;
-  height: var(--nav-height);
-  color: var(--background-color);
+  height: var(--header-height-mobile);
+  color: #fff;
   text-decoration: none;
 }
 
-header nav .nav-brand img {
+header .nav-brand img {
   display: block;
   width: 88px;
   height: 25px;
   object-fit: contain;
 }
 
-/* text wordmark fallback when no logo image is authored */
-header nav .nav-brand .nav-brand-wordmark {
-  font-family: var(--heading-font-family);
-  font-size: 30px;
-  font-style: italic;
-  font-weight: 800;
-  letter-spacing: -0.04em;
-}
-
-header nav .nav-brand .nav-brand-wordmark span {
-  color: var(--fedex-orange);
-}
-
-/* ── hamburger (mobile only) ────────────────────────────────────────────── */
-header nav .nav-hamburger {
+header .nav-utility {
   display: flex;
   align-items: center;
-  justify-content: center;
+  justify-self: end;
+  gap: 12px;
+}
+
+header .nav-utility-link {
+  color: #fff;
+  font-size: 14px;
+  text-decoration: none;
+  white-space: nowrap;
+}
+
+header .nav-utility-link:hover,
+header .nav-utility-link:focus-visible {
+  color: #fff;
+  text-decoration: underline;
+}
+
+header .nav-hamburger {
+  position: relative;
   width: 44px;
   height: 44px;
-  margin: 0 0 0 4px;
   border: 0;
   padding: 0;
   background: none;
-  color: inherit;
+  color: #fff;
   cursor: pointer;
 }
 
-header nav .nav-hamburger-icon,
-header nav .nav-hamburger-icon::before,
-header nav .nav-hamburger-icon::after {
-  box-sizing: border-box;
+header .nav-hamburger-icon,
+header .nav-hamburger-icon::before,
+header .nav-hamburger-icon::after {
   display: block;
-  position: relative;
+  position: absolute;
   width: 22px;
   height: 2px;
   border-radius: 1px;
   background-color: currentcolor;
-  transition: transform 0.25s ease, top 0.25s ease, opacity 0.25s ease;
+  transition: transform 0.2s ease, top 0.2s ease, opacity 0.2s ease;
 }
 
-header nav .nav-hamburger-icon::before,
-header nav .nav-hamburger-icon::after {
+header .nav-hamburger-icon {
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+header .nav-hamburger-icon::before,
+header .nav-hamburger-icon::after {
   content: '';
-  position: absolute;
+  left: 0;
 }
 
-header nav .nav-hamburger-icon::before {
+header .nav-hamburger-icon::before {
   top: -7px;
 }
 
-header nav .nav-hamburger-icon::after {
+header .nav-hamburger-icon::after {
   top: 7px;
 }
 
-header nav .nav-hamburger[aria-expanded='true'] .nav-hamburger-icon {
+header .nav-hamburger[aria-expanded='true'] .nav-hamburger-icon {
   background-color: transparent;
 }
 
-header nav .nav-hamburger[aria-expanded='true'] .nav-hamburger-icon::before {
+header .nav-hamburger[aria-expanded='true'] .nav-hamburger-icon::before {
   top: 0;
   transform: rotate(45deg);
 }
 
-header nav .nav-hamburger[aria-expanded='true'] .nav-hamburger-icon::after {
+header .nav-hamburger[aria-expanded='true'] .nav-hamburger-icon::after {
   top: 0;
   transform: rotate(-45deg);
 }
 
-/* ── menu: right-side drawer on mobile ──────────────────────────────────── */
-header nav .nav-menu {
+header .nav-menu {
   position: fixed;
-  top: var(--nav-height);
+  top: var(--header-height-mobile);
   right: 0;
   width: min(465px, 100%);
-  max-height: calc(100dvh - var(--nav-height));
+  max-height: calc(100dvh - var(--header-height-mobile));
   overflow-y: auto;
-  background-color: var(--light-color);
-  box-shadow: 0 8px 16px rgb(0 0 0 / 20%);
+  background-color: #fff;
+  box-shadow: 0 8px 20px rgb(0 0 0 / 25%);
   transform: translateX(100%);
   visibility: hidden;
-  transition: transform 0.25s ease, visibility 0.25s;
+  transition: transform 0.2s ease, visibility 0.2s;
 }
 
-header nav.nav-open .nav-menu {
-  transform: none;
+header .nav.nav-open .nav-menu {
+  transform: translateX(0);
   visibility: visible;
 }
 
-header nav .nav-list {
+header .nav-menu-list,
+header .nav-submenu {
   list-style: none;
   margin: 0;
   padding: 0;
 }
 
-header nav .nav-item {
-  border-bottom: 1px solid var(--background-color);
+header .nav-item {
+  border-bottom: 1px solid rgb(182 182 182 / 50%);
 }
 
-/* drawer rows: trigger buttons and plain links share .nav-link */
-header nav .nav-link {
+header .nav-link {
+  box-sizing: border-box;
   display: flex;
-  align-items: center;
   width: 100%;
+  align-items: center;
   margin: 0;
   border: 0;
-  padding: 20px 26px;
+  padding: 20px 24px;
   background: none;
-  font: inherit;
+  color: #333;
   font-size: 14px;
-  color: var(--text-color);
   text-align: left;
   text-decoration: none;
   cursor: pointer;
 }
 
-/* caret after the label */
-header nav .nav-item-drop > .nav-link::after {
+header .nav-item-drop > .nav-link::after {
   content: '';
   width: 7px;
   height: 7px;
-  margin-left: 8px;
+  margin-left: auto;
   border: solid currentcolor;
   border-width: 0 2px 2px 0;
-  transform: translateY(-2px) rotate(45deg);
-  transition: transform 0.15s ease;
+  transform: rotate(45deg);
 }
 
-header nav .nav-item-drop > .nav-link[aria-expanded='true']::after {
-  transform: translateY(2px) rotate(225deg);
-}
-
-/* open drawer row inverts to purple, matching fedex.com mobile accordion */
-header nav .nav-item-drop > .nav-link[aria-expanded='true'] {
+header .nav-item-drop > .nav-link[aria-expanded='true'] {
   background-color: var(--fedex-purple);
-  color: var(--background-color);
+  color: #fff;
 }
 
-/* submenu: in-flow accordion panel on mobile */
-header nav .nav-submenu {
+header .nav-item-drop > .nav-link[aria-expanded='true']::after {
+  transform: rotate(-135deg);
+}
+
+header .nav-submenu {
   display: none;
-  list-style: none;
-  margin: 0;
-  padding: 0;
-  background-color: var(--background-color);
 }
 
-header nav .nav-item-drop > .nav-link[aria-expanded='true'] + .nav-submenu {
+header .nav-item-drop > .nav-link[aria-expanded='true'] + .nav-submenu {
   display: block;
 }
 
-header nav .nav-submenu a {
+header .nav-submenu a {
   display: block;
-  padding: 22px 26px 13px;
-  border-bottom: 1px solid var(--nav-divider);
+  padding: 16px 24px;
+  border-bottom: 1px solid rgb(182 182 182 / 50%);
+  color: #333;
   font-size: 14px;
-  line-height: 1.5;
-  color: var(--text-color);
   text-decoration: none;
 }
 
-header nav .nav-submenu a:hover,
-header nav .nav-submenu a:focus-visible {
-  background-color: var(--nav-submenu-hover);
-  font-weight: 500;
-  color: var(--text-color);
+header .nav-submenu a:hover,
+header .nav-submenu a:focus-visible {
+  background-color: #fafafa;
+  color: #333;
   text-decoration: none;
 }
 
-header nav .nav-submenu li:last-child a {
-  border-bottom: 0;
-}
-
-/* bold-authored links render as the fedex "ALL ... SERVICES" style CTA */
-header nav .nav-submenu a.nav-cta {
+header .nav-submenu a.nav-cta {
   font-weight: 700;
   text-transform: uppercase;
-  color: var(--nav-cta-color);
+  color: var(--fedex-link-blue);
 }
 
-/* ── tools: sign in + search ────────────────────────────────────────────── */
-header nav .nav-tools {
-  display: flex;
-  align-items: center;
-}
-
-header nav .nav-tools .nav-tool {
-  display: flex;
-  align-items: center;
-  padding: 10px 12px;
-  font-size: 14px;
-  color: var(--background-color);
-  text-decoration: none;
-}
-
-header nav .nav-tools .nav-tool:hover,
-header nav .nav-tools .nav-tool:focus-visible {
-  color: var(--background-color);
-  text-decoration: underline;
-}
-
-header nav .nav-tools .nav-search .icon {
-  width: 20px;
-  height: 20px;
-}
-
-header nav .nav-tools .nav-search img {
-  filter: brightness(0) invert(1);
-}
-
-/* ── desktop: horizontal bar with dropdown panels ───────────────────────── */
 @media (width >= 900px) {
-  header nav .nav-hamburger {
+  header .nav {
+    grid-template-columns: auto 1fr auto;
+    height: var(--header-height-desktop);
+    padding: 0 20px;
+    gap: 8px;
+  }
+
+  header .nav-brand a {
+    height: var(--header-height-desktop);
+  }
+
+  header .nav-hamburger {
     display: none;
   }
 
-  header nav .nav-menu {
+  header .nav-menu {
     position: static;
     width: auto;
     max-height: none;
@@ -290,85 +242,56 @@ header nav .nav-tools .nav-search img {
     box-shadow: none;
     transform: none;
     visibility: visible;
-    transition: none;
   }
 
-  header nav .nav-list {
+  header .nav-menu-list {
     display: flex;
-    height: var(--nav-height);
+    height: var(--header-height-desktop);
   }
 
-  header nav .nav-item {
+  header .nav-item {
     position: relative;
-    border-bottom: 0;
+    border: 0;
   }
 
-  header nav .nav-link {
+  header .nav-link {
     width: auto;
-    height: var(--nav-height);
-    padding: 0 15px;
-    font-weight: 400;
-    color: var(--background-color);
+    height: var(--header-height-desktop);
+    padding: 0 16px;
+    color: #fff;
+    white-space: nowrap;
   }
 
-  /* open trigger inverts to white with purple text, per fedex.com desktop */
-  header nav .nav-item-drop > .nav-link[aria-expanded='true'] {
-    background-color: var(--background-color);
+  header .nav-item-drop > .nav-link[aria-expanded='true'] {
+    background-color: #fff;
     color: var(--fedex-purple);
   }
 
-  header nav .nav-submenu {
+  header .nav-item-drop > .nav-link::after {
+    margin-left: 8px;
+  }
+
+  header .nav-submenu {
     position: absolute;
     top: 100%;
     left: 0;
     z-index: 20;
-    width: 240px;
-    background-color: var(--background-color);
+    min-width: 240px;
+    background: #fff;
     box-shadow: 4px 4px 0 rgb(0 0 0 / 17%);
   }
 
-  /* keep the last dropdown inside the viewport */
-  header nav .nav-item-drop:last-child .nav-submenu {
+  header .nav-item:last-child .nav-submenu {
     left: auto;
     right: 0;
   }
 
-  header nav .nav-submenu a {
-    padding: 19px 13px 18px;
+  header .nav-submenu a {
+    padding: 14px 16px;
   }
 
-  header nav .nav-submenu li:last-child a {
-    border-bottom: 1px solid var(--nav-divider);
-  }
-
-  header nav .nav-tools {
-    margin-left: 4px;
-  }
-}
-
-/* ── skip to content link (accessibility) ───────────────────────────────── */
-header .skip-to-content {
-  position: absolute;
-  top: -100%;
-  left: 0;
-  z-index: 1200;
-  padding: 8px 16px;
-  background-color: var(--fedex-orange);
-  color: var(--background-color);
-  font-weight: 700;
-  text-decoration: none;
-}
-
-header .skip-to-content:focus {
-  top: 0;
-}
-
-@media (prefers-reduced-motion: reduce) {
-  header nav .nav-menu,
-  header nav .nav-hamburger-icon,
-  header nav .nav-hamburger-icon::before,
-  header nav .nav-hamburger-icon::after,
-  header nav .nav-item-drop > .nav-link::after {
-    transition: none;
+  header .nav-utility {
+    justify-self: end;
+    gap: 16px;
   }
 }
