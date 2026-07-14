@@ -19,7 +19,7 @@ header .nav {
   grid-template-columns: 1fr auto auto;
   align-items: center;
   height: var(--header-height-mobile);
-  max-width: 1210px;
+  max-width: 970px;
   margin: 0 auto;
   padding: 0 16px;
   color: #fff;

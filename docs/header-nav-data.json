@@ -1,0 +1,99 @@
+{
+  "source": "https://www.fedex.com/en-us/home.html",
+  "capturedAt": "2026-07-14",
+  "capturedWith": "chrome-devtools MCP, desktop 1920x1080 / mobile 500x812",
+  "logo": {
+    "src": "https://www.fedex.com/content/dam/fedex-com/logos/logo.png",
+    "alt": "FedEx Logo",
+    "width": 88,
+    "height": 25
+  },
+  "primaryNav": [
+    {
+      "label": "Shipping",
+      "ariaLabel": "Open Shipping Menu",
+      "analytics": "hdr|tab|1|Shipping",
+      "items": [
+        { "label": "Create a Shipment", "href": "https://www.fedex.com/en-us/shipping/ship-manager/login.html", "visibility": "desktop-only" },
+        { "label": "Create a Shipment", "href": "https://www.fedex.com/shippingplus/en-us/guest", "visibility": "mobile-tablet-only" },
+        { "label": "Shipping Rates & Delivery Times", "href": "https://www.fedex.com/en-us/online/rating.html" },
+        { "label": "Schedule & Manage Pickups", "href": "https://www.fedex.com/en-us/shipping/schedule-manage-pickups.html" },
+        { "label": "Packing & Shipping Supplies", "href": "https://www.fedex.com/en-us/shipping/packing.html" },
+        { "label": "International Shipping Guide", "href": "https://www.fedex.com/en-us/shipping/international.html" },
+        { "label": "Freight", "href": "https://www.fedex.com/en-us/shipping/freight.html" },
+        { "label": "Manage a Return", "href": "https://www.fedex.com/en-us/shipping/returns.html" },
+        { "label": "All Shipping Services", "href": "https://www.fedex.com/en-us/shipping.html", "style": "cta" }
+      ]
+    },
+    {
+      "label": "Tracking",
+      "ariaLabel": "Open Tracking Menu",
+      "analytics": "hdr|tab|2|Tracking",
+      "embeddedModule": {
+        "type": "tracking-form",
+        "label": "Tracking ID",
+        "input": { "id": "trackingModuleTrackingNum", "name": "trackingNumber", "placeholder": "Tracking ID" },
+        "button": { "text": "TRACK", "style": "primary-orange" }
+      },
+      "items": [
+        { "label": "Advanced Shipment Tracking", "href": "https://www.fedex.com/fedextracking/" },
+        { "label": "Manage Your Delivery", "href": "https://www.fedex.com/fdmenrollment/" },
+        { "label": "All Tracking Services", "href": "https://www.fedex.com/en-us/tracking.html", "style": "cta" }
+      ]
+    },
+    {
+      "label": "Design & Print",
+      "ariaLabel": "Open Design & Print menu",
+      "analytics": "hdr|tab|3|design & print",
+      "items": [
+        { "label": "Explore Print, Products & Design", "href": "https://www.office.fedex.com/default/all-print-products.html" },
+        { "label": "Browse Services", "href": "https://www.office.fedex.com/default/services" },
+        { "label": "Visit New Marketplace", "href": "https://www.office.fedex.com/", "style": "cta" }
+      ]
+    },
+    {
+      "label": "Locations",
+      "ariaLabel": "Open Locations Menu",
+      "analytics": "hdr|tab|4|Locations",
+      "items": [
+        { "label": "Drop Off a Package", "href": "https://www.fedex.com/en-us/shipping/drop-off-package.html" },
+        { "label": "Find a Location", "href": "https://local.fedex.com/en-us", "style": "cta" }
+      ]
+    },
+    {
+      "label": "Support",
+      "ariaLabel": "Open Customer Support Menu",
+      "analytics": "hdr|tab|5|Support",
+      "items": [
+        { "label": "Small Business Center", "href": "https://www.fedex.com/en-us/small-business.html" },
+        { "label": "FedEx Service Guide", "href": "https://www.fedex.com/en-us/service-guide.html" },
+        { "label": "Account Management Tools", "href": "https://www.fedex.com/en-us/manage-account.html" },
+        { "label": "Frequently Asked Questions", "href": "https://www.fedex.com/en-us/customer-support/faqs.html" },
+        { "label": "File a Claim", "href": "https://www.fedex.com/en-us/customer-support/claims.html" },
+        { "label": "Billing & Invoicing", "href": "https://www.fedex.com/en-us/billing-online.html" },
+        { "label": "Customer Support", "href": "https://www.fedex.com/en-us/customer-support.html", "style": "cta" }
+      ]
+    }
+  ],
+  "utilityNav": {
+    "account": {
+      "label": "Sign Up or Log In",
+      "icon": "avatar",
+      "items": [
+        { "label": "Sign Up / Log In", "href": "https://www.fedex.com/secure-login/en-us/", "style": "cta" },
+        { "label": "My profile", "href": "https://www.fedex.com/profile-overview" },
+        { "label": "Administrative tools", "href": "https://www.fedex.com/apps/shipadmin/" },
+        { "label": "Email preferences", "href": "https://page.message.fedex.com/emailpreferences/login" },
+        { "label": "Address book", "href": "https://www.fedex.com/swab/AddressMain.do?locale=en_US" },
+        { "label": "View & pay bill", "href": "https://www.fedex.com/en-us/billing-online.html" },
+        { "label": "Reporting", "href": "https://www.fedex.com/ecap/report" }
+      ],
+      "promoText": "Open an account to save on shipping costs, time-saving tools and more!"
+    },
+    "search": {
+      "type": "expanding-inline-field",
+      "placeholder": "Search or Tracking Numbers",
+      "behavior": "expands inside the purple bar, autofocuses, shows Top Searched suggestions panel; close X collapses"
+    }
+  }
+}
