@@ -1,7 +1,7 @@
 import { getMetadata } from '../../scripts/aem.js';
 import { loadFragment } from '../fragment/fragment.js';
 
-const DESKTOP_QUERY = window.matchMedia('(min-width: 900px)');
+const DESKTOP_QUERY = window.matchMedia('(min-width: 1024px)');
 
 function closeDropdowns(nav, except = null) {
   nav.querySelectorAll('.nav-trigger[aria-expanded="true"]').forEach((trigger) => {
@@ -27,6 +27,23 @@ function buildBrand(section) {
   if (!brandLink.getAttribute('href')) brandLink.setAttribute('href', '/');
   brandLink.className = '';
   brandLink.setAttribute('aria-label', 'FedEx home');
+  if (!brandLink.querySelector('img')) {
+    const label = brandLink.textContent.trim() || 'FedEx';
+    const wordmark = document.createElement('span');
+    wordmark.className = 'nav-brand-wordmark';
+    const parts = label.match(/^(fed)(ex)$/i);
+    if (parts) {
+      const [, fed, ex] = parts;
+      wordmark.textContent = fed;
+      const exSpan = document.createElement('span');
+      exSpan.className = 'nav-brand-ex';
+      exSpan.textContent = ex;
+      wordmark.append(exSpan);
+    } else {
+      wordmark.textContent = label;
+    }
+    brandLink.replaceChildren(wordmark);
+  }
   container.append(brandLink);
   return container;
 }
@@ -119,6 +136,14 @@ function buildUtility(section) {
     const text = link.textContent.trim();
     if (/search/i.test(text)) link.classList.add('is-search');
     if (/sign\s?(in|up)|log\s?in/i.test(text)) link.classList.add('is-auth');
+    // authors place the icon as a sibling of the link; move it inside so it renders
+    const icon = link.querySelector('.icon') || link.parentElement?.querySelector(':scope > .icon');
+    if (icon) {
+      const label = document.createElement('span');
+      label.className = 'nav-utility-label';
+      label.textContent = text;
+      link.replaceChildren(icon, label);
+    }
     utility.append(link);
   });
 

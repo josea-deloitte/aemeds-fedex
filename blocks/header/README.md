@@ -47,6 +47,6 @@ One link per paragraph, for example:
 ## Rendering rules
 
 - Top-level items with children render as dropdown buttons.
-- On desktop (`>=900px`), dropdowns open on hover/click.
-- On mobile (`<900px`), hamburger opens right-side drawer; submenus behave as accordions.
+- On desktop (`>=1024px`), dropdowns open on hover/click (matches fedex.com's breakpoint).
+- On mobile (`<1024px`), hamburger opens right-side drawer; submenus behave as accordions.
 - Bold submenu links render as blue uppercase CTA links.

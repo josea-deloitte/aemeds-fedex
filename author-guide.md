@@ -110,8 +110,8 @@ Short links displayed at the right edge of the bar, one paragraph per tool. An i
 ### How the Shipping dropdown works
 
 1. Any Section 2 list item that contains a nested list is rebuilt as a real `<button aria-expanded="false" aria-controls="…">` plus a panel (`.nav-submenu`).
-2. On **desktop (≥ 900px)** the dropdown opens on hover (mouse) and on click / Enter / Space. The open trigger inverts to a white background with purple text; the panel is a 240px white card with the fedex.com offset shadow.
-3. On **mobile (< 900px)** the hamburger slides a drawer in from the right, below the 60px bar. Tapping an item expands it in place (accordion): the open trigger inverts to purple with white text. Page scrolling is locked while the drawer is open.
+2. On **desktop (≥ 1024px)** the dropdown opens on hover (mouse) and on click / Enter / Space. The open trigger inverts to a white background with purple text; the panel is a 240px white card with the fedex.com offset shadow.
+3. On **mobile (< 1024px)** the hamburger slides a drawer in from the right, below the 60px bar. Tapping an item expands it in place (accordion): the open trigger inverts to purple with white text. Page scrolling is locked while the drawer is open.
 4. Pressing **Escape** closes open dropdowns first, then the drawer. Clicking outside the nav or moving focus out of it also closes dropdowns.
 
 ---

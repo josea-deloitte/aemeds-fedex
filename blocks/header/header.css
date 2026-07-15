@@ -1,9 +1,6 @@
 header {
   --header-height-mobile: 60px;
   --header-height-desktop: 75px;
-  --fedex-purple: #4d148c;
-  --fedex-orange: #ff6200;
-  --fedex-link-blue: #007ab7;
 }
 
 header .header-wrapper {
@@ -25,9 +22,12 @@ header .nav {
   color: #fff;
 }
 
+/* fedex.com renders all header text at 14px; the shorthand `font: inherit`
+   would out-specify .nav-link/.nav-utility-link and leak the 18px body size in */
 header .nav a,
 header .nav button {
-  font: inherit;
+  font-family: inherit;
+  font-size: 14px;
 }
 
 header .nav-brand a {
@@ -43,6 +43,18 @@ header .nav-brand img {
   width: 88px;
   height: 25px;
   object-fit: contain;
+}
+
+/* text wordmark fallback when no logo image is authored */
+header .nav-brand-wordmark {
+  font-size: 26px;
+  font-style: italic;
+  font-weight: 800;
+  letter-spacing: -1.5px;
+}
+
+header .nav-brand-wordmark .nav-brand-ex {
+  color: var(--fedex-orange);
 }
 
 header .nav-utility {
@@ -63,6 +75,27 @@ header .nav-utility-link:hover,
 header .nav-utility-link:focus-visible {
   color: #fff;
   text-decoration: underline;
+}
+
+header .nav-utility-link .icon {
+  display: inline-flex;
+  vertical-align: middle;
+}
+
+header .nav-utility-link .icon img {
+  width: 20px;
+  height: 20px;
+  filter: brightness(0) invert(1);
+}
+
+/* search renders icon-only like fedex.com; label stays for screen readers */
+header .nav-utility-link.is-search .nav-utility-label {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
 }
 
 header .nav-hamburger {
@@ -159,7 +192,7 @@ header .nav-link {
   align-items: center;
   margin: 0;
   border: 0;
-  padding: 20px 24px;
+  padding: 17px 26px;
   background: none;
   color: #333;
   font-size: 14px;
@@ -208,6 +241,7 @@ header .nav-submenu a:hover,
 header .nav-submenu a:focus-visible {
   background-color: #fafafa;
   color: #333;
+  font-weight: 500;
   text-decoration: none;
 }
 
@@ -217,7 +251,8 @@ header .nav-submenu a.nav-cta {
   color: var(--fedex-link-blue);
 }
 
-@media (width >= 900px) {
+/* fedex.com switches to the desktop nav at 1024px (measured max-width:1023px rules) */
+@media (width >= 1024px) {
   header .nav {
     grid-template-columns: auto 1fr auto;
     height: var(--header-height-desktop);
@@ -287,7 +322,7 @@ header .nav-submenu a.nav-cta {
   }
 
   header .nav-submenu a {
-    padding: 14px 16px;
+    padding: 19px 13px 18px;
   }
 
   header .nav-utility {

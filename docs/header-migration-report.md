@@ -129,6 +129,30 @@ Confirmed by live measurement, ordered by impact:
 
 Minor: mobile bar 60 vs ~63px; drawer background `#fafafa`; open mobile trigger weight 300 vs 400; `styles.css --nav-height: 64px` doesn't match either height (also flagged in the earlier repo audit).
 
+### Status update (2026-07-14, after comparing the deployed EDS site)
+
+Fixed in code the same day:
+
+- **Font-size cascade bug** (found comparing the deployed site): `header .nav a, header .nav button { font: inherit; }` out-specified `.nav-link`/`.nav-utility-link`, so triggers and utility links rendered at 18px instead of 14px. The shorthand was replaced with `font-family: inherit; font-size: 14px`.
+- Item 4 (breakpoint): now 1024px in `header.js` + `header.css`.
+- Item 5 (orange token): global `--fedex-orange` fixed to `#ff6200`; `--fedex-link-blue` promoted to `styles.css`; header.css consumes globals.
+- Item 6 (logo): the published `/fragments/nav` now carries a real authored logo image (author fixed it), and the Fed/Ex text wordmark fallback is now actually implemented in `header.js`/`header.css` for fragments without one.
+- Item 2 partial (search icon): `buildUtility` now moves the authored icon into the link and renders it icon-only (white magnifier) with a visually-hidden text label. The expanding search field remains backlog.
+- Desktop submenu link padding corrected to the measured `19px 13px 18px`; submenu hover now also sets weight 500; mobile trigger padding aligned to measured `17px 26px`; `--nav-height` now matches the real bar (60px, 75px ≥1024px).
+
+Still open (code): tracking-ID form in the Tracking dropdown (item 1), expanding search field (item 2), account dropdown in the utility section (item 3), per-viewport link variants (item 7), analytics attributes (item 8).
+
+### Published content gaps (CMS author actions, not code)
+
+The published `/fragments/nav` is much thinner than fedex.com. Per [header-nav-data.json](header-nav-data.json), an author should:
+
+1. Add the missing **Design & Print** menu (3 items).
+2. Fix **Tracking** submenu: live labels are "Advanced Shipment Tracking", "Manage Your Delivery", plus bold "All Tracking Services" CTA (published has "Track a Shipment" / "FedEx Delivery Manager", no CTA).
+3. Make **Locations** a dropdown ("Drop Off a Package" + bold "Find a Location").
+4. Complete **Support** (7 items; published has only "Customer Support", not bolded as CTA).
+5. Rename "Sign In" → "Sign Up or Log In".
+6. Replace the `/` placeholder hrefs with real target URLs.
+
 ## 6. EDS nav fragment markup (target contract)
 
 The existing three-section contract in [drafts/fragments/nav.plain.html](../drafts/fragments/nav.plain.html) already matches the live hierarchy. To reach full parity, the utility section gains the account submenu (same nested-list pattern) and the Tracking item gains a form module. Proposed authored structure (plain.html):
