@@ -91,19 +91,24 @@ Write a single **bulleted list**. Top-level items with a nested list become **dr
 
 #### Section 3 — Tools (right-hand utilities)
 
-Short links displayed at the right edge of the bar, one paragraph per tool. An icon preceding the text is optional — use the `:icon-name:` inline syntax.
+Short links displayed at the right edge of the bar. Author them as a list; an item with a nested list becomes a dropdown (this is how the account menu works). An icon next to the text is optional — use the `:icon-name:` inline syntax.
 
 ```
-:search: [Search](/en-us/search.html)
-
-[Sign Up or Log In](/en-us/secure-login.html)
+- Sign Up or Log In
+  - **[Sign Up / Log In](/en-us/secure-login.html)**
+  - [My profile](/en-us/profile.html)
+  - [View & pay bill](/en-us/billing.html)
+  - [Open an account](/en-us/open-account.html) to save on shipping costs and more!
+- :search: [Search](/en-us/search.html)
 ```
 
 > **Rules:**
 > - A tool with an icon renders **icon-only**; its link text becomes the accessible label (screen readers still announce "Search").
-> - A link whose text contains **Sign In / Sign Up / Log In** is tagged as the sign-in link. It renders as a plain white text link — fedex.com does not box this in a button.
+> - A link whose text contains **Sign In / Sign Up / Log In** is tagged as the sign-in tool. Like fedex.com, its dropdown shows a bold **Sign Up / Log In** CTA first, plain links after, and any non-link sentence as a light promotional note.
+> - The account dropdown opens below the bar and closes on Escape or an outside click, like the main nav dropdowns.
 > - Icons must be SVG files placed in the `/icons/` folder (e.g. `/icons/search.svg`).
 > - Keep tools to **3 items or fewer**.
+> - Plain paragraph links (no list) are still supported and render as before.
 
 ---
 

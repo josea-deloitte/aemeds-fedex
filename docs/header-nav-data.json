@@ -78,7 +78,20 @@
   "utilityNav": {
     "account": {
       "label": "Sign Up or Log In",
-      "icon": "avatar",
+      "icon": "avatar (28x27, CSS sprite; img alt 'Sign Up or Log In')",
+      "trigger": {
+        "closed": "white 14px/400 text on transparent (purple bar shows through), padding 25px 16px 23px",
+        "open": "item background turns #fff, text #4d148c (same --open pattern as primary nav)"
+      },
+      "panel": {
+        "width": 240,
+        "background": "#fff",
+        "border": "none (perceived border is the row dividers)",
+        "boxShadow": "none",
+        "alignment": "left edge aligned to trigger left edge, extends past trigger's right",
+        "rowDivider": "1px solid rgb(182 182 182 / 50%)",
+        "linkPadding": "19px 13px 18px"
+      },
       "items": [
         { "label": "Sign Up / Log In", "href": "https://www.fedex.com/secure-login/en-us/", "style": "cta" },
         { "label": "My profile", "href": "https://www.fedex.com/profile-overview" },
@@ -86,9 +99,11 @@
         { "label": "Email preferences", "href": "https://page.message.fedex.com/emailpreferences/login" },
         { "label": "Address book", "href": "https://www.fedex.com/swab/AddressMain.do?locale=en_US" },
         { "label": "View & pay bill", "href": "https://www.fedex.com/en-us/billing-online.html" },
-        { "label": "Reporting", "href": "https://www.fedex.com/ecap/report" }
+        { "label": "Reporting", "href": "https://www.fedex.com/ecap/report", "icon": "lock (.lock-hide element, link class fxg-img-default)" }
       ],
-      "promoText": "Open an account to save on shipping costs, time-saving tools and more!"
+      "promoText": "Open an account to save on shipping costs, time-saving tools and more!",
+      "promoStyle": "16px/300, #333, padding 14px 16px 13px",
+      "mobileBehavior": "stays in the bar as a 64px-wide icon-only control; drawer holds only the 5 primary nav items"
     },
     "search": {
       "type": "expanding-inline-field",

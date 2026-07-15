@@ -97,7 +97,12 @@ Tracking-form module (inside Tracking dropdown):
 
 Search (desktop): expands **inline inside the purple bar** (~782px wide), input 45px tall with **purple background and white text**, autofocus on open, placeholder "Search or Tracking Numbers", close X, "Top Searched" suggestion panel underneath.
 
-Sign-in panel: 240px, right-aligned to its trigger, same row dividers; ends with a 16px/300 promo paragraph.
+Sign-in ("Sign Up or Log In") dropdown — deep dive (verified 2026-07-14, second pass):
+
+- Trigger (closed): white 14px/400 text + avatar icon (28×27, CSS sprite) on the purple bar, padding `25px 16px 23px`. The "white box" look only appears when **open**: the wrapper item gets `--open`, background `#fff`, text `#4d148c` — identical pattern to the 5 primary nav items.
+- Panel: 240px white card, `position: absolute; top: 75px`, **left edge aligned to the trigger's left edge** (it extends ~60px past the trigger's right). **No border and no box-shadow** — the "light gray border" impression comes from the row dividers `1px solid rgb(182 182 182 / 50%)`.
+- 8 rows, in order: **SIGN UP / LOG IN** (`#007ab7`, 700, uppercase — standard CTA treatment, here at the top instead of the bottom), then My profile / Administrative tools / Email preferences / Address book / View & pay bill (`#333`, 14px/400, padding `19px 13px 18px`), **Reporting with a lock icon** (`.lock-hide` element; link class `fxg-img-default` where all others are `fxg-img-noIcon`), and a promo paragraph "Open an account to save on shipping costs, time-saving tools and more!" (16px/300, padding `14px 16px 13px`).
+- Mobile (<1024px): the sign-in control **stays in the bar** as a 64px icon-only button; it does not move into the hamburger drawer (the drawer holds only the 5 primary nav items). The bar search icon is hidden on mobile.
 
 Note on the mobile drawer: at 500px viewport the live drawer renders **below the bar spanning full width** (bg `#fafafa`), pushing from the hamburger; items are white accordion rows. Our implementation slides a fixed drawer from the right — visually close, but background (`#fff` vs `#fafafa` behind items) and full-width behavior at phone size should be re-verified at true 375px (browser window minimum prevented exact 375px capture).
 
@@ -140,7 +145,9 @@ Fixed in code the same day:
 - Item 2 partial (search icon): `buildUtility` now moves the authored icon into the link and renders it icon-only (white magnifier) with a visually-hidden text label. The expanding search field remains backlog.
 - Desktop submenu link padding corrected to the measured `19px 13px 18px`; submenu hover now also sets weight 500; mobile trigger padding aligned to measured `17px 26px`; `--nav-height` now matches the real bar (60px, 75px ≥1024px).
 
-Still open (code): tracking-ID form in the Tracking dropdown (item 1), expanding search field (item 2), account dropdown in the utility section (item 3), per-viewport link variants (item 7), analytics attributes (item 8).
+Still open (code): tracking-ID form in the Tracking dropdown (item 1), expanding search field (item 2), per-viewport link variants (item 7), analytics attributes (item 8).
+
+Second update, same day: **item 3 (account dropdown) is now implemented.** The utility section accepts a list; an item with a nested list becomes a dropdown using the same trigger/panel/`--open` pattern as the primary nav (240px white panel below the bar, CTA row first, `.nav-submenu-note` for the promo sentence with inline blue links, Escape/outside-click closing, focus restore). Authored in `drafts/fragments/nav.plain.html`; the CMS fragment needs the same list structure to activate it in production. Also fixed in the same pass: desktop column order was logo | utility | menu (grid auto-placement) — now explicitly logo | menu | utility like fedex.com; added `:focus-visible` outlines (currentcolor, works on both purple bar and white panels) and print styles.
 
 ### Published content gaps (CMS author actions, not code)
 

@@ -37,11 +37,20 @@ Use nested lists. Top-level items with nested lists become dropdown triggers.
 
 ### 3) Utility section
 
-One link per paragraph, for example:
+Either one link per paragraph (legacy), or a list. In a list, an item with a
+nested list becomes a dropdown — this is how the account menu is authored:
 
 ```md
-[Sign Up or Log In](/secure-login/en-us/)
-[Search](/en-us/home.html#)
+- Sign Up or Log In
+  - **[Sign Up / Log In](/secure-login/en-us/)**
+  - [My profile](/profile-overview)
+  - [Administrative tools](/apps/shipadmin/)
+  - [Email preferences](/emailpreferences/login)
+  - [Address book](/swab/AddressMain.do)
+  - [View & pay bill](/en-us/billing-online.html)
+  - [Reporting](/ecap/report)
+  - [Open an account](/en-us/open-account.html) to save on shipping costs, time-saving tools and more!
+- :search: [Search](/en-us/home.html#)
 ```
 
 ## Rendering rules
@@ -49,4 +58,9 @@ One link per paragraph, for example:
 - Top-level items with children render as dropdown buttons.
 - On desktop (`>=1024px`), dropdowns open on hover/click (matches fedex.com's breakpoint).
 - On mobile (`<1024px`), hamburger opens right-side drawer; submenus behave as accordions.
+  The utility (account) dropdown floats below the bar at all sizes.
 - Bold submenu links render as blue uppercase CTA links.
+- A submenu item that isn't purely a link (e.g. the "Open an account…" sentence)
+  renders as a promotional note row (16px light, inline blue links).
+- An icon placed next to a utility link is moved inside it; the Search link
+  renders icon-only with a screen-reader label.

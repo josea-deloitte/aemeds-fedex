@@ -61,6 +61,30 @@ function getTopItemLabel(li) {
   return { text, link: null };
 }
 
+function buildSubmenu(source, id, label) {
+  const submenu = document.createElement('ul');
+  submenu.className = 'nav-submenu';
+  submenu.id = id;
+  submenu.setAttribute('aria-label', label);
+
+  [...source.children].filter((el) => el.matches('li')).forEach((subLi) => {
+    const subItem = document.createElement('li');
+    const subLink = subLi.querySelector('a');
+    if (subLink && subLink.textContent.trim() === subLi.textContent.trim()) {
+      subLink.className = '';
+      if (subLi.querySelector('strong')) subLink.classList.add('nav-cta');
+      subItem.append(subLink);
+    } else {
+      // plain or mixed content (e.g. the account promo text) renders as a note row
+      subItem.className = 'nav-submenu-note';
+      subItem.append(...subLi.childNodes);
+    }
+    submenu.append(subItem);
+  });
+
+  return submenu;
+}
+
 function buildMenu(section) {
   const menu = document.createElement('div');
   menu.className = 'nav-menu';
@@ -90,25 +114,7 @@ function buildMenu(section) {
       trigger.setAttribute('aria-expanded', 'false');
       trigger.setAttribute('aria-controls', submenuId);
 
-      const submenu = document.createElement('ul');
-      submenu.className = 'nav-submenu';
-      submenu.id = submenuId;
-      submenu.setAttribute('aria-label', text);
-
-      [...submenuSource.children].filter((el) => el.matches('li')).forEach((subLi) => {
-        const subItem = document.createElement('li');
-        const subLink = subLi.querySelector('a');
-        if (subLink) {
-          subLink.className = '';
-          if (subLi.querySelector('strong')) subLink.classList.add('nav-cta');
-          subItem.append(subLink);
-        } else {
-          subItem.textContent = subLi.textContent.trim();
-        }
-        submenu.append(subItem);
-      });
-
-      item.append(trigger, submenu);
+      item.append(trigger, buildSubmenu(submenuSource, submenuId, text));
     } else if (link) {
       link.className = 'nav-link';
       item.append(link);
@@ -125,27 +131,71 @@ function buildMenu(section) {
   return menu;
 }
 
+function classifyUtility(el, text) {
+  if (/search/i.test(text)) el.classList.add('is-search');
+  if (/sign\s?(in|up)|log\s?in/i.test(text)) el.classList.add('is-auth');
+}
+
+function decorateUtilityLink(link) {
+  link.className = '';
+  link.classList.add('nav-utility-link');
+  const text = link.textContent.trim();
+  classifyUtility(link, text);
+  // authors place the icon as a sibling of the link; move it inside so it renders
+  const icon = link.querySelector('.icon') || link.parentElement?.querySelector(':scope > .icon');
+  if (icon) {
+    const label = document.createElement('span');
+    label.className = 'nav-utility-label';
+    label.textContent = text;
+    link.replaceChildren(icon, label);
+  }
+  return link;
+}
+
+function buildUtilityDropdown(li, submenuSource, index) {
+  const item = document.createElement('div');
+  item.className = 'nav-utility-item nav-item-drop';
+
+  const { text } = getTopItemLabel(li);
+  const submenuId = `nav-utility-submenu-${index}`;
+  const trigger = document.createElement('button');
+  trigger.type = 'button';
+  trigger.className = 'nav-utility-link nav-trigger';
+  trigger.setAttribute('aria-expanded', 'false');
+  trigger.setAttribute('aria-controls', submenuId);
+  classifyUtility(trigger, text);
+
+  const label = document.createElement('span');
+  label.className = 'nav-utility-label';
+  label.textContent = text;
+  trigger.append(label);
+  const icon = li.querySelector(':scope > .icon, :scope > p > .icon');
+  if (icon) trigger.append(icon);
+
+  item.append(trigger, buildSubmenu(submenuSource, submenuId, text));
+  return item;
+}
+
 function buildUtility(section) {
   const utility = document.createElement('div');
   utility.className = 'nav-utility';
   if (!section) return utility;
 
-  section.querySelectorAll('a').forEach((link) => {
-    link.className = '';
-    link.classList.add('nav-utility-link');
-    const text = link.textContent.trim();
-    if (/search/i.test(text)) link.classList.add('is-search');
-    if (/sign\s?(in|up)|log\s?in/i.test(text)) link.classList.add('is-auth');
-    // authors place the icon as a sibling of the link; move it inside so it renders
-    const icon = link.querySelector('.icon') || link.parentElement?.querySelector(':scope > .icon');
-    if (icon) {
-      const label = document.createElement('span');
-      label.className = 'nav-utility-label';
-      label.textContent = text;
-      link.replaceChildren(icon, label);
-    }
-    utility.append(link);
-  });
+  const list = section.querySelector('ul');
+  if (list) {
+    // list-based utility: items with a nested list become dropdowns (e.g. account menu)
+    [...list.children].filter((el) => el.matches('li')).forEach((li, index) => {
+      const submenuSource = li.querySelector(':scope > ul');
+      if (submenuSource) {
+        utility.append(buildUtilityDropdown(li, submenuSource, index));
+      } else {
+        const link = li.querySelector('a');
+        if (link) utility.append(decorateUtilityLink(link));
+      }
+    });
+  } else {
+    section.querySelectorAll('a').forEach((link) => utility.append(decorateUtilityLink(link)));
+  }
 
   return utility;
 }
@@ -180,7 +230,7 @@ export default async function decorate(block) {
   nav.append(brand, utility, hamburger, menu);
   hamburger.addEventListener('click', () => toggleDrawer(nav));
 
-  menu.querySelectorAll('.nav-item-drop').forEach((item) => {
+  nav.querySelectorAll('.nav-item-drop').forEach((item) => {
     const trigger = item.querySelector('.nav-trigger');
     trigger.addEventListener('click', () => {
       const expanded = trigger.getAttribute('aria-expanded') === 'true';

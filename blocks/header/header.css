@@ -98,6 +98,24 @@ header .nav-utility-link.is-search .nav-utility-label {
   white-space: nowrap;
 }
 
+/* utility dropdown (e.g. account menu): same --open pattern as primary nav */
+header .nav-utility-item {
+  position: relative;
+}
+
+header button.nav-utility-link {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  height: var(--header-height-mobile);
+  margin: 0;
+  border: 0;
+  padding: 0 12px;
+  background: none;
+  cursor: pointer;
+}
+
+
 header .nav-hamburger {
   position: relative;
   width: 44px;
@@ -211,7 +229,7 @@ header .nav-item-drop > .nav-link::after {
   transform: rotate(45deg);
 }
 
-header .nav-item-drop > .nav-link[aria-expanded='true'] {
+header .nav-trigger[aria-expanded='true'] {
   background-color: var(--fedex-purple);
   color: #fff;
 }
@@ -224,7 +242,20 @@ header .nav-submenu {
   display: none;
 }
 
-header .nav-item-drop > .nav-link[aria-expanded='true'] + .nav-submenu {
+/* utility dropdown panel (e.g. account menu) floats below the bar at all sizes */
+header .nav-utility-item .nav-submenu {
+  position: absolute;
+  top: 100%;
+  right: 0;
+  left: auto;
+  z-index: 20;
+  min-width: 240px;
+  background: #fff;
+  box-shadow: 4px 4px 0 rgb(0 0 0 / 17%);
+  color: #333;
+}
+
+header .nav-trigger[aria-expanded='true'] + .nav-submenu {
   display: block;
 }
 
@@ -264,11 +295,20 @@ header .nav-submenu a.nav-cta {
     height: var(--header-height-desktop);
   }
 
+  /* DOM order is brand, utility, menu (mobile-first); fedex.com desktop order is
+     logo | menu | utility, so place the grid columns explicitly */
+  header .nav-brand {
+    grid-row: 1;
+    grid-column: 1;
+  }
+
   header .nav-hamburger {
     display: none;
   }
 
   header .nav-menu {
+    grid-row: 1;
+    grid-column: 2;
     position: static;
     width: auto;
     max-height: none;
@@ -297,7 +337,7 @@ header .nav-submenu a.nav-cta {
     white-space: nowrap;
   }
 
-  header .nav-item-drop > .nav-link[aria-expanded='true'] {
+  header .nav-trigger[aria-expanded='true'] {
     background-color: #fff;
     color: var(--fedex-purple);
   }
@@ -326,7 +366,58 @@ header .nav-submenu a.nav-cta {
   }
 
   header .nav-utility {
+    grid-row: 1;
+    grid-column: 3;
     justify-self: end;
     gap: 16px;
+  }
+
+  header button.nav-utility-link {
+    height: var(--header-height-desktop);
+    padding: 0 16px;
+  }
+}
+
+/* note rows and focus styles (after base submenu rules for cascade order) */
+header .nav-submenu-note {
+  border-bottom: 1px solid rgb(182 182 182 / 50%);
+  padding: 14px 16px 13px;
+  color: #333;
+  font-size: 16px;
+  font-weight: 300;
+  line-height: 1.5;
+}
+
+header .nav-submenu-note p {
+  margin: 0;
+}
+
+header .nav-submenu .nav-submenu-note a {
+  display: inline;
+  border-bottom: 0;
+  padding: 0;
+  color: var(--fedex-link-blue);
+}
+
+header .nav a:focus-visible,
+header .nav button:focus-visible {
+  outline: 2px solid currentcolor;
+  outline-offset: -2px;
+}
+
+header .nav-submenu li:last-child a,
+header .nav-submenu-note:last-child {
+  border-bottom: 0;
+}
+
+@media print {
+  header .header-wrapper {
+    position: static;
+  }
+
+  header .nav-hamburger,
+  header .nav-utility,
+  header .nav-submenu {
+    display: none;
   }
 }
