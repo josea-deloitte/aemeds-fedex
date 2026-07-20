@@ -238,6 +238,11 @@ export default async function decorate(block) {
       trigger.setAttribute('aria-expanded', String(!expanded));
     });
 
+    // The account/utility dropdown (e.g. "Sign Up or Log In") is click-only on
+    // fedex.com — hovering it does nothing there (verified live 2026-07-27).
+    // Hover-to-open only applies to the primary Shipping/Tracking/etc. menus.
+    if (item.classList.contains('nav-utility-item')) return;
+
     item.addEventListener('pointerenter', (event) => {
       if (!DESKTOP_QUERY.matches || event.pointerType !== 'mouse') return;
       closeDropdowns(nav, trigger);

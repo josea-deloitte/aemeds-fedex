@@ -9,6 +9,27 @@ The `hero-homepage` block creates a full-bleed hero section matching the FedEx h
 - **Quick-action strip**: icon + label links overlapping the bottom of the hero
 - **Optional tracking form**: add a "track" cell to include a tracking-number input
 
+## Confirmed live 2026-07-27: single static hero, not a carousel
+
+Re-captured `.hero_homepage_v1` directly from fedex.com and checked for slide
+markers: 0 real dot/pagination indicators, 0 arrow/next/prev controls, 0
+slide elements (the one initial "dot" class match was `fxg-app__form-wrapper`
+noise from a form field, not pagination). The video plays once — `loop` is
+**not** set on the real `<video>` — rather than looping, which this block
+now matches (`createVideo` no longer sets `video.loop`). The quick-actions
+row (Quote/Ship/Locations/Support) is a set of plain outbound `<a>` links, and
+the "Track" input is the one visible, functional form; there's also a hidden
+sibling "locations finder" mini-app (`fxg-app__location`) elsewhere in the
+hero that isn't wired to any of the visible quick-links and isn't part of
+this block's scope. See `drafts/reference-hero-carousel.html` for the raw
+capture.
+
+**Not the same thing as [`tracking-widget`](../tracking-widget/README.md):**
+that block's tabbed "Rate & Ship / Track / Locations" card with per-tab forms
+does not match this fresh capture of the homepage hero (which has simple
+inline quick-links, not tabs) — it was likely modeled on a different source.
+Don't conflate the two; this block is the one that matches `hero_homepage_v1`.
+
 ## Author Guide
 
 ### Creating the Block in da.live

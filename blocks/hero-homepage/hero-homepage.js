@@ -14,12 +14,11 @@ function isVideoSrc(src) {
   return /\.(mp4|webm|ogg)(\?.*)?$/i.test(src);
 }
 
-/** Creates an auto-playing, muted, looping <video> element. */
+/** Creates an auto-playing, muted <video> element (plays once, matching fedex.com). */
 function createVideo(src, isMobile) {
   const video = document.createElement('video');
   video.autoplay = true;
   video.muted = true;
-  video.loop = true;
   video.setAttribute('playsinline', '');
   video.setAttribute('crossorigin', 'anonymous');
   video.className = isMobile

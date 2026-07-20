@@ -56,9 +56,17 @@ nested list becomes a dropdown — this is how the account menu is authored:
 ## Rendering rules
 
 - Top-level items with children render as dropdown buttons.
-- On desktop (`>=1024px`), dropdowns open on hover/click (matches fedex.com's breakpoint).
+- On desktop (`>=1024px`), the **primary nav** dropdowns (Shipping, Tracking, etc.)
+  open on hover or click (matches fedex.com's breakpoint).
+- The **account/utility dropdown** ("Sign Up or Log In") is **click-only at every
+  breakpoint** — hovering it does nothing, matching fedex.com's real behavior
+  (verified live 2026-07-27: hover events produce no change; only a click sets
+  `aria-expanded="true"`). Clicking the trigger again, clicking outside the nav,
+  or pressing Escape all close it.
 - On mobile (`<1024px`), hamburger opens right-side drawer; submenus behave as accordions.
   The utility (account) dropdown floats below the bar at all sizes.
+- All dropdown triggers are `<button>` elements, so Enter/Space toggle them via
+  native browser behavior; no custom key handling is needed for that.
 - Bold submenu links render as blue uppercase CTA links.
 - A submenu item that isn't purely a link (e.g. the "Open an account…" sentence)
   renders as a promotional note row (16px light, inline blue links).
