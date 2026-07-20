@@ -1,0 +1,16 @@
+.button {
+  display: block;
+}
+
+.button .button-link {
+  color: var(--fedex-link-blue);
+  font-weight: 700;
+  letter-spacing: 0.03em;
+  text-decoration: none;
+  text-transform: uppercase;
+}
+
+.button .button-link:hover,
+.button .button-link:focus-visible {
+  text-decoration: underline;
+}

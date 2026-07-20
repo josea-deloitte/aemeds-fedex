@@ -1,0 +1,15 @@
+.spacer {
+  height: var(--spacer-height-mobile, 24px);
+}
+
+@media (width >= 600px) {
+  .spacer {
+    height: var(--spacer-height-tablet, var(--spacer-height-mobile, 24px));
+  }
+}
+
+@media (width >= 900px) {
+  .spacer {
+    height: var(--spacer-height-desktop, var(--spacer-height-tablet, var(--spacer-height-mobile, 24px)));
+  }
+}

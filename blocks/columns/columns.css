@@ -1,6 +1,7 @@
 .columns > div {
   display: flex;
   flex-direction: column;
+  gap: 16px;
 }
 
 .columns img {
@@ -29,5 +30,61 @@
   .columns > div > div {
     flex: 1;
     order: unset;
+  }
+}
+
+/* fxg-col-mobile_position1/2: FedEx's own token names, carried over as-is
+   for authoring continuity — kept out of selector-class-pattern's kebab-case
+   check since they intentionally contain an underscore, like the source. */
+
+/* fxg-col-mobile_position1: explicit natural mobile order (1st cell first) */
+/* stylelint-disable-next-line selector-class-pattern */
+.columns.fxg-col-mobile_position1 > div > div:first-child {
+  order: 0;
+}
+
+/* stylelint-disable-next-line selector-class-pattern */
+.columns.fxg-col-mobile_position1 > div > div:nth-child(2) {
+  order: 1;
+}
+
+/* fxg-col-mobile_position2: 2nd cell shows first on mobile (e.g. lead with the image) */
+/* stylelint-disable-next-line selector-class-pattern */
+.columns.fxg-col-mobile_position2 > div > div:first-child {
+  order: 1;
+}
+
+/* stylelint-disable-next-line selector-class-pattern */
+.columns.fxg-col-mobile_position2 > div > div:nth-child(2) {
+  order: 0;
+}
+
+@media (width >= 900px) {
+  /* :first-child/:nth-child(2) match the swap rules' specificity above so
+     source order (not specificity) decides — otherwise the pseudo-class
+     bump would keep the mobile swap in effect at desktop widths too */
+  /* stylelint-disable-next-line selector-class-pattern */
+  .columns.fxg-col-mobile_position1 > div > div:first-child,
+  /* stylelint-disable-next-line selector-class-pattern */
+  .columns.fxg-col-mobile_position1 > div > div:nth-child(2),
+  /* stylelint-disable-next-line selector-class-pattern */
+  .columns.fxg-col-mobile_position2 > div > div:first-child,
+  /* stylelint-disable-next-line selector-class-pattern */
+  .columns.fxg-col-mobile_position2 > div > div:nth-child(2) {
+    order: unset;
+  }
+}
+
+/* col-sm-6: force a 2-up, 50%-width grid from the small/tablet breakpoint up
+   (Bootstrap's col-sm-6 = 6 of 12 grid units), instead of splitting evenly
+   across however many cells are authored */
+@media (width >= 600px) {
+  .columns.col-sm-6 > div {
+    flex-flow: row wrap;
+    gap: 24px;
+  }
+
+  .columns.col-sm-6 > div > div {
+    flex: 0 0 calc(50% - 12px);
   }
 }

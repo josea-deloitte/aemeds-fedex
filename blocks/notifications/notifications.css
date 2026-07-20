@@ -1,0 +1,52 @@
+.notifications {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  border-radius: 4px;
+  padding: 16px;
+  background-color: #e5f2f9;
+  color: #007ab7;
+}
+
+.notifications.success {
+  background-color: #e9f7ef;
+  color: #1e7e42;
+}
+
+.notifications.warning {
+  background-color: #fff6e5;
+  color: #8a5a00;
+}
+
+.notifications.error {
+  background-color: #fbe9e9;
+  color: #b3261e;
+}
+
+.notifications-icon {
+  flex: none;
+  width: 24px;
+  height: 24px;
+}
+
+.notifications-icon svg {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
+.notifications-content {
+  color: var(--text-color);
+  font-size: var(--body-font-size-xs);
+  line-height: 1.5;
+}
+
+.notifications-content p {
+  margin: 0;
+}
+
+.notifications-content a:any-link {
+  color: inherit;
+  font-weight: 700;
+  text-decoration: underline;
+}

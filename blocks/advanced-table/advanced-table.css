@@ -1,0 +1,73 @@
+.advanced-table-scroll {
+  width: 100%;
+  overflow-x: auto;
+}
+
+.advanced-table-scroll table {
+  width: 100%;
+  border-collapse: collapse;
+  text-align: left;
+}
+
+.advanced-table-scroll th,
+.advanced-table-scroll td {
+  vertical-align: top;
+  padding: 12px 16px;
+}
+
+.advanced-table-scroll thead th {
+  border-bottom: 2px solid var(--fedex-purple);
+  color: var(--fedex-purple);
+  font-family: var(--heading-font-family);
+  font-size: var(--body-font-size-xs);
+  text-transform: uppercase;
+}
+
+.advanced-table-scroll tbody tr {
+  border-bottom: 1px solid #dadada;
+}
+
+.advanced-table-scroll td img {
+  width: 48px;
+}
+
+.advanced-table-scroll td a:any-link {
+  font-weight: 700;
+}
+
+/* stack into label/value pairs below tablet width */
+@media (width < 600px) {
+  .advanced-table-scroll table,
+  .advanced-table-scroll tbody,
+  .advanced-table-scroll tr,
+  .advanced-table-scroll td {
+    display: block;
+    width: 100%;
+  }
+
+  .advanced-table-scroll thead {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+    clip-path: inset(50%);
+  }
+
+  .advanced-table-scroll tbody tr {
+    padding: 12px 0;
+  }
+
+  .advanced-table-scroll td {
+    padding: 4px 0;
+    border-bottom: 0;
+  }
+
+  .advanced-table-scroll td[data-label]::before {
+    content: attr(data-label);
+    display: block;
+    color: var(--dark-color);
+    font-size: var(--body-font-size-xs);
+    font-weight: 700;
+    text-transform: uppercase;
+  }
+}
