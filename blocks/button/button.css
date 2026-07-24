@@ -14,3 +14,23 @@
 .button .button-link:focus-visible {
   text-decoration: underline;
 }
+
+.button .button-outline {
+  display: inline-block;
+  border: 2px solid var(--fedex-orange);
+  border-radius: 4px;
+  padding: 14px 32px;
+  color: var(--fedex-orange);
+  font-weight: 700;
+  letter-spacing: 0.03em;
+  text-align: center;
+  text-decoration: none;
+  text-transform: uppercase;
+  transition: background-color 0.2s ease, color 0.2s ease;
+}
+
+.button .button-outline:hover,
+.button .button-outline:focus-visible {
+  background-color: var(--fedex-orange);
+  color: var(--background-color);
+}

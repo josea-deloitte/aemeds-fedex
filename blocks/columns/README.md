@@ -10,7 +10,7 @@ Create a table named `Columns` with one row and one cell per column:
 
 | Columns | |
 | --- | --- |
-| ## Why ship with FedEx?<br>Whether it's across states or worldwide, we prioritize the secure and swift arrival of your shipments. | ![](/why-ship.jpg) |
+| ## Ship with confidence<br>Whether it's across states or worldwide, we prioritize the secure and swift arrival of your shipments. | ![](/courier.jpg) |
 
 - Any number of columns per row is supported; columns split the row evenly.
 - A cell containing **only** a picture is floated to sit naturally alongside
@@ -38,16 +38,26 @@ gives a 2-up grid whose second cell leads on mobile.
 ## Mapping note
 
 This block is the EDS equivalent of FedEx's `column_control_v1` component
-(a Bootstrap-style responsive column row) — see [Variants](#variants) below
-for the `col-sm-6`/`fxg-col-mobile_position1`/`fxg-col-mobile_position2`
-options carried over from that component. FedEx re-authors separate
+(a Bootstrap-style responsive column row) for **plain, generic** usage — one
+row, no special background or nested sub-rows. FedEx re-authors separate
 `column_control_v1`/`advanced_table_v1` copies of the same content per
-breakpoint (e.g. a mobile-only variant and a desktop-only variant of the
-same "Why ship with FedEx?" row); EDS doesn't need that — one instance of
-this block already adapts responsively via CSS. (Standalone `advanced_table_v1`
-usage — an actual table, not a breakpoint duplicate — maps to the
+breakpoint (e.g. a mobile-only variant and a desktop-only variant of the same
+row); EDS doesn't need that — one instance of this block already adapts
+responsively via CSS. (Standalone `advanced_table_v1` usage — an actual
+table, not a breakpoint duplicate — maps to the
 [`advanced-table`](../advanced-table/README.md) block instead.) The specific
 repeating "image + heading + copy + link" feature row (e.g. "Find many fast
 delivery options") maps to the [`cards`](../cards/README.md) block's `promo`
 variant instead, since that block already handles the pinned-footer-link
 layout — see that README for the authoring structure.
+
+**Correction (2026-07-27):** an earlier version of this doc used "Why ship
+with FedEx?" as this block's example and cited it as this block's variant
+options carried straight from `column_control_v1`. Closer live inspection
+showed that section is actually a **nested** structure with a per-row
+background color (`#FAFAFA`) — a level of configurability this generic block
+doesn't (and shouldn't) support. It now maps to the dedicated
+[`column-control`](../column-control/README.md) block instead, which was
+built specifically for that. Use `columns` for a new, plain N-column layout;
+use `column-control` only when reproducing a specific FedEx section that
+needs a background color or nested rows.

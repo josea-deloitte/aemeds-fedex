@@ -1,0 +1,80 @@
+.column-control {
+  --column-control-ratio: 6;
+}
+
+.column-control > div {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.column-control img {
+  display: block;
+  width: 100%;
+}
+
+@media (width >= 900px) {
+  .column-control > div {
+    flex-direction: row;
+    align-items: flex-start;
+    gap: 32px;
+  }
+}
+
+.column-control > div > div {
+  flex: 1;
+}
+
+.column-control.hide-mobile {
+  display: none;
+}
+
+@media (width >= 900px) {
+  .column-control.hide-mobile {
+    display: block;
+  }
+}
+
+.column-control.has-background > div {
+  border-radius: 4px;
+  padding: 24px;
+  background-color: var(--column-control-bg);
+}
+
+@media (width >= 900px) {
+  .column-control.has-background > div {
+    padding: 40px;
+  }
+}
+
+@media (width >= 900px) {
+  .column-control > div > div:first-child {
+    flex: 0 0 calc(var(--column-control-ratio) / 12 * 100%);
+  }
+
+  .column-control > div > div:nth-child(2) {
+    flex: 0 0 calc((12 - var(--column-control-ratio)) / 12 * 100%);
+  }
+}
+
+/* fxg-col-mobile_position2: 2nd cell shows first on mobile only, matching
+   FedEx's own token name (kept out of selector-class-pattern intentionally) */
+/* stylelint-disable-next-line selector-class-pattern */
+.column-control.fxg-col-mobile_position2 > div > div:first-child {
+  order: 1;
+}
+
+/* stylelint-disable-next-line selector-class-pattern */
+.column-control.fxg-col-mobile_position2 > div > div:nth-child(2) {
+  order: 0;
+}
+
+@media (width >= 900px) {
+  /* same specificity as the swap rules above so source order decides */
+  /* stylelint-disable-next-line selector-class-pattern */
+  .column-control.fxg-col-mobile_position2 > div > div:first-child,
+  /* stylelint-disable-next-line selector-class-pattern */
+  .column-control.fxg-col-mobile_position2 > div > div:nth-child(2) {
+    order: unset;
+  }
+}

@@ -20,9 +20,15 @@ Create a table named `Button` with a single cell holding one link:
 | Block name | Renders as |
 | --- | --- |
 | `Button` | Plain uppercase blue text link (default — matches most FedEx CTAs like "drop off a package") |
+| `Button (outline)` | Orange-bordered, orange-text, transparent button that fills orange on hover — matches FedEx's real "Start shipping now" button (`fxg-button--transparent`, confirmed against a live screenshot 2026-07-27) |
 | `Button (primary)` | Solid filled button (sitewide `.button.primary` style) |
-| `Button (secondary)` | Outlined/transparent button (sitewide `.button.secondary` style) — matches FedEx's "Start shipping now" look |
+| `Button (secondary)` | Outlined/transparent button (sitewide `.button.secondary` style, dark border/text — a generic alternative, not a FedEx-specific match) |
 | `Button (accent)` | High-impact filled button (sitewide `.button.accent` style) |
+
+**Correction (2026-07-27):** an earlier version of this doc said `secondary`
+matched "Start shipping now" — that was wrong (assumed, not verified against
+FedEx's real rendered color). Live inspection shows that button is orange, not
+dark; use the new `outline` variant for it instead.
 
 ## Good to know
 
